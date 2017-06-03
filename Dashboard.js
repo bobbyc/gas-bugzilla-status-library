@@ -1,9 +1,9 @@
-var ss = SpreadsheetApp.getActiveSpreadsheet();
-var dashboardSheet = ss.getSheetByName("Overall Dashboard");
-var weeklySheet = ss.getSheetByName("Weekly");
-var mailingSheet = ss.getSheetByName("Mailing");
-var scheduleSheet = ss.getSheetByName("Release_Schedule");
-var teamSheet = ss.getSheetByName("Team View");
+var ss              = SpreadsheetApp.getActiveSpreadsheet();
+var dashboardSheet  = ss.getSheetByName("Overall Dashboard");
+var weeklySheet     = ss.getSheetByName("Weekly");
+var mailingSheet    = ss.getSheetByName("Mailing");
+var scheduleSheet   = ss.getSheetByName("Release_Schedule");
+var teamSheet       = ss.getSheetByName("Team View");
 
 var countP1 = countP2 = countP3 = countP4 = countP5 = countPN = 0;
 var TDCcountP1 = TDCcountP2 = TDCcountP3 = TDCcountP4 = TDCcountP5 = TDCcountPN = 0;
@@ -98,7 +98,7 @@ function overallCountBug() {
 
     var componentList = countComponents(platformBugs);
     var TaipeiBugs = searchBugsByComponents(TaipeiQuery, componentList);
-    prioritizeBugs (TaipeiBugs);
+    prioritizeBugs(TaipeiBugs);
     Developers = countDevelopers (TaipeiBugs);
     var nTotalNumber = Object.keys(Developers).length;
     var nTDCBugs = TaipeiBugs.bugs.length;
@@ -125,7 +125,7 @@ function overallCountBug() {
     dashboardSheet.getRange(startRow+2,  startColumn+1).setFormula("=hyperlink(\"" + AllBuglink + "\";\"" + nTDCBugs + "\")");
 
     // Update Non-TDC headcount
-    dashboardSheet.getRange(startRow+2,  startColumn+3).setValue((nTotalNumber-(TDCFFHeadcount+TDCPLHeadcount)));
+    dashboardSheet.getRange(startRow+2,  startColumn+3).setValue( nTotalNumber - (TDCFFHeadcount+TDCPLHeadcount) );
 
     // Update TDC Firefox
     dashboardSheet.getRange(startRow+2,  startColumn+4).setFormula("=hyperlink(\"" + FirefoxLink + "\";\"" + TDCFFBugsNum + "\")");

@@ -42,30 +42,31 @@ function searchBugsByComponents(searchTerms, components) {
       url.push("&", encodeURIComponent(searchTerms[m][0]), "=", encodeURIComponent(searchTerms[m][1]));
   }
 
+  // Search bugs by 10 components per loop
   var results = undefined;
-  var comps= Object.keys(components);
   var loopsize = 10;
-  var compsLength = comps.length;
-  for (var j=0 ; j < compsLength ; j = j+loopsize) {
+  var ComponentNames= Object.keys(components);
+  var ComponentLength = ComponentNames.length;
+  for (var j=0 ; j < ComponentLength ; j = j+loopsize) {
 
-    var r = [url.join("")];
-    for (var k=j; (k < (j+loopsize)) && (k<compsLength) ; k++) {
-      r.push("&component=", encodeURIComponent(comps[k]));
+    var query = [url.join("")];
+    for (var k=j; (k < (j+loopsize)) && (k<ComponentLength) ; k++) {
+      query.push("&component=", encodeURIComponent(ComponentNames[k]));
     }
 
-    var request = r.join("");
+    var request = query.join("");
     //Logger.log(request + "\n\n");
     var bugs = sendRequest(request);
+
+    // Merge bugs arrays
     if (results == undefined)
       results = bugs;
     else {
-      // merge 2 arrays
-      for (var b=0; b< bugs.bugs.length; b++)
-      results.bugs.push(bugs.bugs[k]);
+      for (var index=0; index< bugs.bugs.length; index++)
+      results.bugs.push(bugs.bugs[index]);
     }
   }
 
-  Logger.log(results + "\n\n");
   return results;
 }
 
@@ -82,28 +83,54 @@ function buildBugLink(searchTerms) {
 
 function test_searchBugs(){
   var searchTerms = [];
+  var version = "55";
 
-//      FirefoxQuery = bugzillaURL + "/rest/bug?include_fields=id,priority,assigned_to,component&bug_status=RESOLVED&bug_status=VERIFIED&f1=cf_status_firefox"
-//    + FFversion[j]
-//    + "&f2=assigned_to&o1=equals&o2=anywordssubstr&resolution=FIXED&v1=fixed&v2=gasolin%20timdream%20tchien%20rchien%20schung%20ralin%20flin%20etseng%20scwwu%20ehung%20lchang%20dhuang%20kmlee%20selee%20yliao%20fliu%20jyeh%20vchen%20hhsu%20tchen%20pchen%20mochen%20thsieh%20hhuang%20jhuang%20chuang%20mliang%20jalin%20bmao%20fshih%20atsai%20gchang%20whsu%20ashiue%20ctang%20wiwang%20ywu%20brsun%20echuang%20alchen%20lochang";
+  var PlatformQuery = [];
+  PlatformQuery.push(["include_fields","id,priority,assigned_to,component"]);
+  PlatformQuery.push(["bug_status","RESOLVED"]);
+  PlatformQuery.push(["bug_status","VERIFIED"]);
+  PlatformQuery.push(["resolution","FIXED"]);
+  PlatformQuery.push(["f1","cf_status_firefox" + version]);
+  PlatformQuery.push(["o1","equals"]);
+  PlatformQuery.push(["v1","fixed"]);
+  PlatformQuery.push(["f2","assigned_to"]);
+  PlatformQuery.push(["o2","anywordssubstr"]);
+  PlatformQuery.push(["v2","shuang ttung joliu tlee kchen tchou janus926 cyu wpan cku fatseng \
+                          pchang boris.chiou tlin hshih mtseng vliu ethlin \
+                          aschen echen btseng jhao jjong \
+                          htsai bhsu jdai sawang sshih hchang allstars.chh \
+                          dlee ettseng tnguyen tihuang gweng bechen jolin ctai \
+                          jwwang ayang alwu tkuo mchiang bwu tkuo howareyou322 \
+                          kaku xeonchen amchung juhsu swu kechen jacheng \
+                          kuoe0 dmu cleu etsai kikuo kechang cchang schien"]);
 
-  var version = "53";
+  var platformBugs = searchBugs(PlatformQuery);
+  var Developers = countDevelopers (platformBugs);
+  var TDCPLHeadcount = Object.keys(Developers).length;
+  var TDCPLBugsNum = platformBugs.bugs.length;
 
-  searchTerms.push(["include_fields","id,priority,assigned_to,component"]);
-  searchTerms.push(["bug_status","RESOLVED"]);
-  searchTerms.push(["bug_status","VERIFIED"]);
-  searchTerms.push(["f1","cf_status_firefox" + version]);
-  searchTerms.push(["f2","assigned_to"]);
-  searchTerms.push(["o1","equals"]);
-  searchTerms.push(["o2","anywordssubstr"]);
-  searchTerms.push(["resolution","FIXED"]);
-  searchTerms.push(["v1","fixed"]);
-  searchTerms.push(["v2","gasolin timdream tchien rchien schung ralin flin etseng scwwu ehung lchang dhuang kmlee \
-                         selee yliao fliu jyeh vchen hhsu tchen pchen mochen thsieh hhuang jhuang chuang mliang jalin \
-                         bmao fshih atsai gchang whsu ashiue ctang wiwang ywu brsun echuang alchen lochang"]);
+  Logger.log( "Bugs:" +  platformBugs.bugs.length);
+  Logger.log( "Developers:" +  TDCPLHeadcount);
 
-  var bugs = searchBugs(searchTerms);
-  var componentList = countComponents(bugs);
-  var total  = searchBugsByComponents(searchTerms, componentList);
+  //
+  // Query TDC handleded
+  //
+  var TaipeiQuery = [];
+  TaipeiQuery.push(["include_fields","id,priority,assigned_to,component"]);
+  TaipeiQuery.push(["bug_status","RESOLVED"]);
+  TaipeiQuery.push(["bug_status","VERIFIED"]);
+  TaipeiQuery.push(["resolution","FIXED"]);
+  TaipeiQuery.push(["f1","cf_status_firefox" + version]);
+  TaipeiQuery.push(["o1","equals"]);
+  TaipeiQuery.push(["v1","fixed"]);
+
+  var componentList = countComponents(platformBugs);
+  var TaipeiBugs = searchBugsByComponents(TaipeiQuery, componentList);
+  Developers = countDevelopers (TaipeiBugs);
+  var nTotalNumber = Object.keys(Developers).length;
+  var nTDCBugs = TaipeiBugs.bugs.length;
+
+  Logger.log( "Bugs:" +  TaipeiBugs.bugs.length);
+  Logger.log( "Developers:" +  nTotalNumber);
 
 }
