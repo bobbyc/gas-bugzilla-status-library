@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+
+  "Dear all,<br><br>
+  Please check Taipei weekly bug count update:<br>
+  Detail: <a href="https://goo.gl/gKXPv6"> TDC Bug Status </a><br><br>
+  <table style="width:100%">
+    <thead style="background-color:#EEE;">
+      <tr>
+        <th style="border: 1px solid #000000; padding: 3px 10px;">Current Version</th>
+        <th style="border: 1px solid #000000; padding: 3px 10px;">Release Date</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Mozilla Total</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Taipei Firefox</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Taipei Platform</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Taipei Total</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Headcount Ratio</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Bug Ratio</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Non-TDC Bug/Ppl</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">TDC Bug/Ppl</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">P1</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">P2</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">P3</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">P4</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">P5</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">--</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid #999999; padding: 3px 10px;"><?= currentVersion ?></td>
+        <td style="border: 1px solid #999999; padding: 3px 10px;"><?= releaseDate ?></td>
+        <td style="border: 1px solid #999999; padding: 3px 10px;"><a href="<?= overallLink ?>"><?=  overallCell ?></a></td>
+        <td style="border: 1px solid #999999; padding: 3px 10px;"><a href="<?= tdcFirefoxlLink ?>"><?= tdcFirefoxCell ?></a></td>
+        <td style="border: 1px solid #999999; padding: 3px 10px;"><a href="<?= tdcPlatformlLink ?>"><?= tdcPlatformCell ?></a></td>
+        <td style="border: 1px solid #999999; padding: 3px 10px;"><?= tdcTotalCell ?> </td>
+        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:#f6ccc9;"><?= nTDCHCRatio ?>%</td>
+        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:#ddbbcc;"><?= nTDCBugPplRatio ?>%</td>
+        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:#ffe397;"><?= nNonTDCBugPplRatio ?></td>
+        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:#b9d1f6;"><?= nTDCPercentage ?></td>
+        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:<?= tdcP1CellBackground ?>;"><?= nP1Percentage ?>%</td>
+        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:<?= tdcP2CellBackground ?>;"><?= nP2Percentage ?>%</td>
+        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:<?= tdcP3CellBackground ?>;"><?= nP3Percentage ?>%</td>
+        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:<?= tdcP4CellBackground ?>;"><?= nP4Percentage ?>%</td>
+        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:<?= tdcP5CellBackground ?>;"><?= nP5Percentage ?>%</td>
+        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:<?= tdcPNCellBackground ?>;"><?= nPNPercentage ?>%</td>
+      </tr>
+    </tbody>
+
+  </table>
+  <table style=border-width:0;border-collapse:collapse;border-spacing:1;border:0>
+    <tr>
+      <p align='left'>
+      <img src='https://docs.google.com/spreadsheets/d/1s2LCo4Raba0dni--pNi5m-MegGsihvPPhQzlI80U08g/pubchart?oid=1859949787&format=image'>
+      <img src='https://docs.google.com/spreadsheets/d/1s2LCo4Raba0dni--pNi5m-MegGsihvPPhQzlI80U08g/pubchart?oid=230676355&format=image'></p>
+    </tr>
+    <tr>
+      <p align='left'>
+      <img src='https://docs.google.com/spreadsheets/d/1s2LCo4Raba0dni--pNi5m-MegGsihvPPhQzlI80U08g/pubchart?oid=1380858210&format=image'>
+      <img src='https://docs.google.com/spreadsheets/d/1s2LCo4Raba0dni--pNi5m-MegGsihvPPhQzlI80U08g/pubchart?oid=1653645995&format=image'></p>
+    </tr>
+  </table>
+  </body>
+</html>
+
+
