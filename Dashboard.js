@@ -4,6 +4,9 @@ var weeklySheet     = ss.getSheetByName("Weekly");
 var mailingSheet    = ss.getSheetByName("Mailing");
 var scheduleSheet   = ss.getSheetByName("Release_Schedule");
 var teamSheet       = ss.getSheetByName("Team View");
+var taipeiSheet     = ss.getSheetByName("Taipei");
+var mozillaSheet    = ss.getSheetByName("Mozilla");
+var globalSheet     = ss.getSheetByName("Global");
 
 var countP1 = countP2 = countP3 = countP4 = countP5 = countPN = 0;
 var TDCcountP1 = TDCcountP2 = TDCcountP3 = TDCcountP4 = TDCcountP5 = TDCcountPN = 0;
@@ -159,6 +162,9 @@ function overallCountBug() {
 
 
 function prioritizeBugs (resultBugs){
+  // init counter
+  countP1 = countP2 = countP3 = countP4 = countP5 = countPN = 0;
+
   for (var i=0; i < resultBugs.bugs.length; i++)
     {
       switch (resultBugs.bugs[i].priority)
