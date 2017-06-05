@@ -14,6 +14,6 @@ function saveWeeklyRecords() {
   weeklySheet.getRange(3, 2, 1, 32).setValues(data);
 
   // Set Weekly date
-  weeklySheet.getRange(3, 1).setValue(d.toDateString().substring(4, 15));
+  weeklySheet.getRange(3, 1).setValue(today.toDateString().substring(4, 15));
 
 }
