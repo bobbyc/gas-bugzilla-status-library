@@ -4,7 +4,6 @@ var weeklySheet     = ss.getSheetByName("Weekly");
 var mailingSheet    = ss.getSheetByName("Mailing");
 var scheduleSheet   = ss.getSheetByName("Release_Schedule");
 var teamSheet       = ss.getSheetByName("Team View");
-var taipeiSheet     = ss.getSheetByName("Taipei");
 var mozillaSheet    = ss.getSheetByName("Mozilla");
 var globalSheet     = ss.getSheetByName("Global");
 
