@@ -2,11 +2,11 @@ function testSendStatusEmail()
 {
 
       // Get Email Body
-  var subject = "TDC Weekly Bug Status Update - "+ today.toDateString();
+  var subject = "Update: TDC Weekly Bug Status - "+ today.toDateString();
 
   // Send to single email
   MailApp.sendEmail({
-    to: "bchien@mozilla.com",
+    to: "\"Bobby Chien\" <bchien@mozilla.com>",
     subject: subject,
     htmlBody: composeNewEmailBody(),
   });
@@ -35,14 +35,18 @@ function sendStatusEmail() {
     var row = subscription[i];
     var name = row[0];
     var email = row[1];
-    emails.push(email);
 
-    if (emails == '')
+    if (email == '')
       break;
+    else {
+      email = [ "\"", name, "\" <", email, ">"];
+      emails.push(email.join(""));
+    }
   }
 
   // Sending emails
   emails = emails.join(",");
+  Logger.log(emails);
   MailApp.sendEmail({
     to: emails,
     subject: subject,
