@@ -2,7 +2,7 @@ function testSendStatusEmail()
 {
 
       // Get Email Body
-  var subject = "Update: TDC Weekly Bug Status - "+ today.toDateString();
+  var subject = "Update: TDC Weekly Status - "+ today.toDateString();
 
   // Send to single email
   MailApp.sendEmail({
@@ -14,7 +14,7 @@ function testSendStatusEmail()
 }
 
 // Send mail notification
-function sendStatusEmail() {
+function SendStatusEmail() {
 
   // Get Email Body
   var subject = "TDC Weekly Bug Status Update - "+ today.toDateString();
@@ -57,7 +57,7 @@ function sendStatusEmail() {
 
 function composeNewEmailBody() {
 
-  var template = HtmlService.createTemplateFromFile('Template');
+  var template = HtmlService.createTemplateFromFile('template.html');
 
   // Logon information
   var myEmail = Session.getActiveUser().getEmail();

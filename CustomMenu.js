@@ -2,8 +2,11 @@ function onOpen() {
   ss = SpreadsheetApp.getActiveSpreadsheet();
 
   var menuItems = [
-    {name: 'Update', functionName: 'overallCountBug'},
-    {name: 'Snapshot Weekly', functionName: 'saveWeeklyRecords'}
+    {name: 'Update Team Sheet', functionName: 'UpdateTeamSheet'},
+    {name: 'Update Mozilla Sheet', functionName: 'UpdateMozillaSheet'},
+    {name: 'Update Overall Sheet', functionName: 'UpdateOverallSheet'},
+    {name: 'Update Regression Sheet', functionName: 'UpdateRegressionSheet'},
+    {name: 'Send Status Email', functionName: 'SendStatusEmail'}
   ];
-  ss.addMenu('[Caculate Bugs]', menuItems);
+  ss.addMenu('Team Status', menuItems);
 }
