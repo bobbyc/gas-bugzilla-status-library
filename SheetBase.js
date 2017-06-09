@@ -1,3 +1,12 @@
+function TestBugSheet() {
+
+    // Count team group, and post result
+    var Sheet = new SheetBase("TestSheet");
+    var team = new TeamBugQueryBase("Taipei DOM", TaipeiDOM);
+    team.SearchFixedBug(undefined, "55");
+    team.RenderToSheet(Sheet.sheet, startRowRuntime, startColumn);
+}
+
 /**
  * Constructor - SheetBase
  * @param err
@@ -23,20 +32,6 @@ SheetBase.prototype.Generate = function () {
     }
 }
 
-function TestBugSheet() {
-
-    // Create Product team group
-    var runtime = [TaipeiDOM];
-    var visual = [TaipeiFrontend1];
-    var fennec = [TaipeiFennec];
-
-    // Count team group, and post result
-    var Sheet = new SheetBase("TestSheet");
-    var team = new TeamBugQueryBase("Taipei DOM", TaipeiDOM);
-    team.SearchFixedBug(undefined, "55");
-    team.RenderToSheet(Sheet.sheet, startRowRuntime, startColumn);
-}
-
 /**
  * Constructor - TeamBugQuery
  * @param err
@@ -59,15 +54,14 @@ var TeamBugQueryBase = function (name, members) {
     this.countDev = 0;
 }
 
-/**
- * Show matrix as table
- */
-TeamBugQueryBase.prototype.SearchBug = function () {
-    Logger.log("TeamBugQuery.prototype.searchBug");
-}
-
 TeamBugQueryBase.prototype.CountBugs = function () {
 
+    this.countP1 = 0;
+    this.countP2 = 0;
+    this.countP3 = 0;
+    this.countP4 = 0;
+    this.countP5 = 0;
+    this.countPN = 0;
     if (this.buglist != undefined) {
         this.nBugs = this.buglist.bugs.length
         for (var i = 0; i < this.nBugs; i++) {
@@ -116,10 +110,30 @@ TeamBugQueryBase.prototype.SearchFixedBug = function (ProductName, version) {
     }
 
     // Do the query
-    this.buglist = searchBugs(TeamQuery);
-    this.CountBugs();
+    return this.SearchBugs(TeamQuery);
+}
 
-    return this.buglist;
+TeamBugQueryBase.prototype.SearchFixedRegression = function (version) {
+
+    // Define search terms
+    this.buglist = undefined;
+    var TeamQuery = [];
+    TeamQuery.push(["include_fields", "id,priority,assigned_to,component"]);
+    TeamQuery.push(["bug_status", "RESOLVED"], ["bug_status", "VERIFIED"]);
+    TeamQuery.push(["resolution", "FIXED"]);
+    TeamQuery.push(["keywords", "regression, crash"]);
+    TeamQuery.push(["keywords_type", "anywords"]);
+    TeamQuery.push(["f1", "cf_status_firefox" + version]);
+    TeamQuery.push(["o1", "equals"]);
+    TeamQuery.push(["v1", "fixed"]);
+    if (this.members != undefined) {
+        TeamQuery.push(["f2", "assigned_to"]);
+        TeamQuery.push(["o2", "anywordssubstr"]);
+        TeamQuery.push(["v2", this.members]);
+    }
+
+    // Do the query
+    return this.SearchBugs(TeamQuery);
 }
 
 TeamBugQueryBase.prototype.SearchFixedBugFromDateTo = function (version, datefrom, dateto) {
@@ -142,9 +156,37 @@ TeamBugQueryBase.prototype.SearchFixedBugFromDateTo = function (version, datefro
     if (dateto != undefined) TeamQuery.push(["chfieldto", dateto]);
 
     // Do the query
-    this.buglist = searchBugs(TeamQuery);
-    this.CountBugs();
+    return this.SearchBugs(TeamQuery);
+}
 
+TeamBugQueryBase.prototype.SearchFixedBugByComponens = function (version, components) {
+
+    // Define search terms
+    this.buglist = undefined;
+    var TeamQuery = [];
+    TeamQuery.push(["include_fields", "id,priority,assigned_to,component"]);
+    TeamQuery.push(["bug_status", "RESOLVED"], ["bug_status", "VERIFIED"]);
+    TeamQuery.push(["resolution", "FIXED"]);
+    TeamQuery.push(["f1", "cf_status_firefox" + version]);
+    TeamQuery.push(["o1", "equals"]);
+    TeamQuery.push(["v1", "fixed"]);
+    if (this.members != undefined) {
+        TeamQuery.push(["f2", "assigned_to"]);
+        TeamQuery.push(["o2", "anywordssubstr"]);
+        TeamQuery.push(["v2", this.members]);
+    }
+
+    // Do the query
+    this.buglist = searchBugsByComponents(TeamQuery, components);
+    this.CountBugs();
+    return this.buglist;
+}
+
+TeamBugQueryBase.prototype.SearchBugs = function (query) {
+
+    // Do the query
+    this.buglist = searchBugs(query);
+    this.CountBugs();
     return this.buglist;
 }
 

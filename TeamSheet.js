@@ -44,40 +44,28 @@ TeamSheet.prototype.Generate = function () {
     var numVersions = 1;
 
     // Fetch the range of cells B1 -> [numVersions]1
-    var dataRange = this.sheet.getRange(startRow, startColumn, 1, numVersions)
+    var dataRange = this.sheet.getRange(startRow, startColumn, 1, numVersions+1)
     var FFversion = dataRange.getValues()[0];
 
-    // Looping version
     var resultRow = 3;
-    var resultColumn = 2;
-    for (var ver = 0; ver < FFversion.length; ver++) {
+    var resultColumn = startColumn;
+    var loopTeam = [TeamDOM, TeamSecurity, TeamNetwork, TeamLayout, TeamGraphic, TeamMedia, TeamPerf, TeamFrontend];
+    for (var index = 0; index < FFversion.length-1; index++) {
 
         // Extract version from version string
-        var v = FFversion[ver].split(" ")[1];
+        var Nightly = FFversion[index].split(" ")[1];
 
-        // Query Team Data
-        TeamDOM.SearchFixedBug(undefined, v);
-        TeamNetwork.SearchFixedBug(undefined, v);
-        TeamSecurity.SearchFixedBug(undefined, v);
-        TeamLayout.SearchFixedBug(undefined, v);
-        TeamGraphic.SearchFixedBug(undefined, v);
-        TeamMedia.SearchFixedBug(undefined, v);
-        TeamPerf.SearchFixedBug(undefined, v);
-        TeamFrontend.SearchFixedBug(undefined, v);
+        for (i = 0 ; i < loopTeam.length; i++) {
 
-        // Render to Sheet
-        TeamDOM.RenderToSheet(this.sheet, resultRow, resultColumn+ver);
-        TeamNetwork.RenderToSheet(this.sheet, resultRow+10, resultColumn+ver);
-        TeamSecurity.RenderToSheet(this.sheet, resultRow+20, resultColumn+ver);
-        TeamLayout.RenderToSheet(this.sheet, resultRow+30, resultColumn+ver);
-        TeamGraphic.RenderToSheet(this.sheet, resultRow+40, resultColumn+ver);
-        TeamMedia.RenderToSheet(this.sheet, resultRow+50, resultColumn+ver);
-        TeamPerf.RenderToSheet(this.sheet, resultRow+60, resultColumn+ver);
-        TeamFrontend.RenderToSheet(this.sheet, resultRow+70, resultColumn+ver);
+            var rowsTeamResult = 10;
+            loopTeam[i].SearchFixedBug(undefined, Nightly);
+            loopTeam[i].RenderToSheet(this.sheet, resultRow + rowsTeamResult*i, resultColumn+index);
+
+        }
     }
 }
 
-function RunTeamSheet() {
+function UpdateTeamSheet() {
 
     // Generate Sheet
     var Sheet = new TeamSheet("Team");

@@ -59,7 +59,7 @@ MozillaSheet.prototype.Generate = function () {
     // Loop Firefox Version Columns
     var startRow = 1;       // First row of data to process
     var startColumn = 2;    // First row of data to process
-    var numVersions = 2;        // Change this to calculate more weeks
+    var numVersions = 1;        // Change this to calculate more weeks
 
     // Fetch the range of cells B1 -> [numVersions]1
     var FFversion = this.sheet.getRange(startRow, startColumn, 1, numVersions+1).getValues()[0]
@@ -84,7 +84,7 @@ MozillaSheet.prototype.Generate = function () {
     }
 }
 
-function RunMozillaSheet() {
+function UpdateMozillaSheet() {
 
     // Generate Sheet
     var Sheet = new MozillaSheet("Mozilla");

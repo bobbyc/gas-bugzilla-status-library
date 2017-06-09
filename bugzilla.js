@@ -1,6 +1,26 @@
 var BUGZILLA_REST = "https://bugzilla.mozilla.org/rest/bug?";
 var BUGZILLA_URL = "https://bugzilla.mozilla.org/buglist.cgi?";
 
+
+/**
+ * Constructor - SheetBase
+ * @param err
+ * @param result
+ */
+var Bugzilla = function (name) {
+    this.name = name || 'BugSheetBase';
+    this.sheet = ss.getSheetByName(name);
+}
+
+/**
+ * Sheet Generate function
+ * @param err
+ * @param result
+ */
+Bugzilla.prototype.Loop = function () {
+
+}
+
 // Send REST request to url
 function sendRequest(url) {
 
@@ -64,12 +84,12 @@ function searchBugsByComponents(searchTerms, components) {
     if (results == undefined)
       results = bugs;
     else {
-      for (var index = 0; index < bugs.bugs.length; index++)
+      for (var index in bugs.bugs)
         results.bugs.push(bugs.bugs[index]);
     }
   }
 
-  return results;
+  return result;
 }
 
 function buildBugLink(searchTerms) {
