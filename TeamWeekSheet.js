@@ -63,7 +63,7 @@ TeamWeekSheet.prototype.Generate = function () {
     }
 }
 
-function RunTeamWeekSheet() {
+function UpdateTeamWeekSheet() {
 
     // Generate Sheet
     var Sheet = new TeamWeekSheet("WeekSheet");
