@@ -40,7 +40,10 @@ SheetBase.prototype.Generate = function () {
 var TeamBugQueryBase = function (name, members) {
     this.name = name || 'TeamBugQuery';
     this.members = members;
-    this.nTeamSize = members.split(",").length;
+    if (this.members != undefined)
+        this.nTeamSize = members.split(",").length;
+    else
+        this.nTeamSize = 0;
 
     // Counter for Bugs
     this.buglist = undefined;
@@ -89,13 +92,13 @@ TeamBugQueryBase.prototype.CountBugs = function () {
     }
 }
 
-TeamBugQueryBase.prototype.SearchFixedBug = function (ProductName, version) {
+TeamBugQueryBase.prototype.SearchFixedBug = function (product, version) {
 
     // Define search terms
     this.buglist = undefined;
     var TeamQuery = [];
-    if (ProductName != undefined) {
-        TeamQuery.push(["product", ProductName]);
+    if (product != undefined) {
+        TeamQuery.push(["product", product]);
     }
     TeamQuery.push(["include_fields", "id,priority,assigned_to,component"]);
     TeamQuery.push(["bug_status", "RESOLVED"], ["bug_status", "VERIFIED"]);
@@ -113,11 +116,14 @@ TeamBugQueryBase.prototype.SearchFixedBug = function (ProductName, version) {
     return this.SearchBugs(TeamQuery);
 }
 
-TeamBugQueryBase.prototype.SearchFixedRegression = function (version) {
+TeamBugQueryBase.prototype.SearchFixedRegression = function (product, version) {
 
     // Define search terms
     this.buglist = undefined;
     var TeamQuery = [];
+    if (product != undefined) {
+        TeamQuery.push(["product", product]);
+    }
     TeamQuery.push(["include_fields", "id,priority,assigned_to,component"]);
     TeamQuery.push(["bug_status", "RESOLVED"], ["bug_status", "VERIFIED"]);
     TeamQuery.push(["resolution", "FIXED"]);

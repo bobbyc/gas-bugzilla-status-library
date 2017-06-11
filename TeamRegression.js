@@ -17,14 +17,24 @@ TeamRegressionSheet.prototype.constructor = TeamRegressionSheet;
 TeamRegressionSheet.prototype.Generate = function () {
 
     // Prepare TeamQuery
-    var TeamDOM = new TeamBugQueryBase("DOM", MozillaDOM);
-    var TeamNetwork = new TeamBugQueryBase("Network", MozillaNetwork);
-    var TeamSecurity = new TeamBugQueryBase("Security", MozillaSecurity);
-    var TeamLayout = new TeamBugQueryBase("Layout", MozillaLayout);
-    var TeamGraphic = new TeamBugQueryBase("Graphic", MozillaGraphic);
-    var TeamMedia = new TeamBugQueryBase("Media", MozillaMedia);
-    var TeamPerf = new TeamBugQueryBase("Perf", MozillaPerf);
-    var TeamFrontend = new TeamBugQueryBase("Frontend", MozillaFrontend);
+    var TeamDOM = new TeamBugQueryBase("Core", TaipeiDOM);
+    var TeamNetwork = new TeamBugQueryBase("Core", TaipeiNetwork);
+    var TeamSecurity = new TeamBugQueryBase("Core", TaipeiSecurity);
+    var TeamLayout = new TeamBugQueryBase("Core", TaipeiLayout);
+    var TeamGraphic = new TeamBugQueryBase("Core", TaipeiGraphic);
+    var TeamMedia = new TeamBugQueryBase("Core", TaipeiMedia);
+    var TeamPerf = new TeamBugQueryBase("Core", TaipeiPerf);
+
+    var TeamMozDOM = new TeamBugQueryBase("Core", MozillaDOM);
+    var TeamMozNetwork = new TeamBugQueryBase("Core", MozillaNetwork);
+    var TeamMozSecurity = new TeamBugQueryBase("Core", MozillaSecurity);
+    var TeamMozLayout = new TeamBugQueryBase("Core", MozillaLayout);
+    var TeamMozGraphic = new TeamBugQueryBase("Core", MozillaGraphic);
+    var TeamMozMedia = new TeamBugQueryBase("Core", MozillaMedia);
+
+    var TeamFirefox = new TeamBugQueryBase("Firefox", "");
+    var TeamCore = new TeamBugQueryBase("Core", "");
+    var TeamAndroid = new TeamBugQueryBase("Firefox for Android", "");
 
     // Loop Firefox Version Columns
     var startRow = 1;  // First row of data to process
@@ -37,16 +47,20 @@ TeamRegressionSheet.prototype.Generate = function () {
 
     var resultRow = 3;
     var resultColumn = startColumn;
-    var loopTeam = [TeamDOM, TeamSecurity, TeamNetwork, TeamLayout, TeamGraphic, TeamMedia, TeamPerf, TeamFrontend];
+    var loopTeam = [TeamDOM, TeamSecurity, TeamNetwork, TeamLayout, TeamGraphic, TeamMedia, TeamPerf,
+                    TeamMozDOM, TeamMozSecurity, TeamMozNetwork, TeamMozLayout, TeamMozGraphic, TeamMozMedia,
+                    TeamFirefox, TeamCore, TeamAndroid];
+
     for (var index = 0; index < FFversion.length-1; index++) {
 
         // Extract version from version string
         var Nightly = FFversion[index].split(" ")[1];
 
+        // Loop each team to get regression+crash count
         for (i = 0 ; i < loopTeam.length; i++) {
 
             var rowsTeamResult = 10;
-            loopTeam[i].SearchFixedRegression(Nightly);
+            loopTeam[i].SearchFixedRegression(loopTeam[i].name, Nightly);
             loopTeam[i].RenderToSheet(this.sheet, resultRow + rowsTeamResult*i, resultColumn+index);
 
         }
