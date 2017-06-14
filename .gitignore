@@ -2,3 +2,15 @@
 .gas/local.json
 .gas/remote.json
 gas-include/*
+
+
+# for Visual Studio code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# for local
+data/*.json
+ipython/.ipynb_checkpoints/*
