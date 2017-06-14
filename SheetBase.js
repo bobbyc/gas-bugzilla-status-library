@@ -15,6 +15,8 @@ function TestBugSheet() {
 var SheetBase = function (name) {
     this.name = name || 'BugSheetBase';
     this.sheet = ss.getSheetByName(name);
+    if (this.sheet == null)
+        this.sheet = ss.insertSheet(this.name);
 }
 
 /**
@@ -57,6 +59,13 @@ var TeamBugQueryBase = function (name, members) {
     this.countDev = 0;
 }
 
+/**
+ * Constructor - TeamBugQueryBase
+ * @param err
+ * @param result
+ */
+TeamBugQueryBase.prototype.constructor = TeamBugQueryBase;
+
 TeamBugQueryBase.prototype.CountBugs = function () {
 
     this.countP1 = 0;
@@ -92,6 +101,14 @@ TeamBugQueryBase.prototype.CountBugs = function () {
     }
 }
 
+TeamBugQueryBase.prototype.SearchBugs = function (query) {
+
+    // Do the query
+    this.buglist = searchBugs(query);
+    this.CountBugs();
+    return this.buglist;
+}
+
 TeamBugQueryBase.prototype.SearchFixedBug = function (product, version) {
 
     // Define search terms
@@ -100,7 +117,7 @@ TeamBugQueryBase.prototype.SearchFixedBug = function (product, version) {
     if (product != undefined) {
         TeamQuery.push(["product", product]);
     }
-    TeamQuery.push(["include_fields", "id,priority,assigned_to,component"]);
+    TeamQuery.push(["include_fields", "id,priority,assigned_to,component,keywords"]);
     TeamQuery.push(["bug_status", "RESOLVED"], ["bug_status", "VERIFIED"]);
     TeamQuery.push(["resolution", "FIXED"]);
     TeamQuery.push(["f1", "cf_status_firefox" + version]);
@@ -124,7 +141,7 @@ TeamBugQueryBase.prototype.SearchFixedRegression = function (product, version) {
     if (product != undefined) {
         TeamQuery.push(["product", product]);
     }
-    TeamQuery.push(["include_fields", "id,priority,assigned_to,component"]);
+    TeamQuery.push(["include_fields", "id,priority,assigned_to,component,keywords"]);
     TeamQuery.push(["bug_status", "RESOLVED"], ["bug_status", "VERIFIED"]);
     TeamQuery.push(["resolution", "FIXED"]);
     TeamQuery.push(["keywords", "regression, crash"]);
@@ -147,7 +164,8 @@ TeamBugQueryBase.prototype.SearchFixedBugFromDateTo = function (version, datefro
     // Define search terms
     this.buglist = undefined;
     var TeamQuery = [];
-    TeamQuery.push(["query_format", "advanced"]);
+    //TeamQuery.push(["query_format", "advanced"]);
+    TeamQuery.push(["include_fields", "id,priority,assigned_to,component"]);
     TeamQuery.push(["bug_status", "RESOLVED"], ["bug_status", "VERIFIED"]);
     TeamQuery.push(["resolution", "FIXED"]);
     TeamQuery.push(["f1", "cf_status_firefox" + version]);
@@ -184,14 +202,6 @@ TeamBugQueryBase.prototype.SearchFixedBugByComponens = function (version, compon
 
     // Do the query
     this.buglist = searchBugsByComponents(TeamQuery, components);
-    this.CountBugs();
-    return this.buglist;
-}
-
-TeamBugQueryBase.prototype.SearchBugs = function (query) {
-
-    // Do the query
-    this.buglist = searchBugs(query);
     this.CountBugs();
     return this.buglist;
 }

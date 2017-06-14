@@ -39,7 +39,7 @@ TeamRegressionSheet.prototype.Generate = function () {
     // Loop Firefox Version Columns
     var startRow = 1;  // First row of data to process
     var startColumn = 2;  // First row of data to process
-    var numVersions = 6;
+    var numVersions = 1;
 
     // Fetch the range of cells B1 -> [numVersions]1
     var dataRange = this.sheet.getRange(startRow, startColumn, 1, numVersions+1)

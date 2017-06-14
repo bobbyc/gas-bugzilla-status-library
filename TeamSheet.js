@@ -1,16 +1,4 @@
 
-var TaipeiDOM       = "htsai, jdai, bhsu, sawang, ttung, sshih, echuang, alchen, shuang, btian, jjong, btseng, echen";
-var TaipeiSecurity  = "ettseng, tnguyen, cfu, tihuang, jhao, dlee, hchang, allstars.chh";
-var TaipeiNetwork   = "swu, xeonchen, amchung, kechang, juhsu, schieng";
-
-var TaipeiMedia     = "bwu, alwu, cchang, jacheng, mchiang, kaku, kikuo, jolin, ayang, jwwang, bechen";
-var TaipeiLayout    = "aschen, tokuo, fatseng, lochang, ywu, jeremychen, slyu, cku, etsai, boris.chiou, tlin, cmccormack";
-var TaipeiGraphic   = "howareyou322, dmu, ethlin, cleu, kechen, brsun, mtseng, hshih, vliu";
-var TaipeiPerf      = "kchen, wpan, janus926, gweng, cyu, tlee";
-var TaipeiFrontend1 = "ehung, fliu, selee, lchang, kmlee";
-var TaipeiFrontend2 = "timdream, ralin@mozilla.com, evan@tseng.io, gasolin, rchien, scwwu, schung";
-var TaipeiFennec    = "cnevinchen@gmail.com, walkingice0204@gmail.com, topwu.tw@gmail.com, osimpleo@gmail.com, max@mxli.us";
-
 /**
  * Constructor -
  * @param err
