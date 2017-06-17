@@ -1,4 +1,3 @@
-
 /**
  * Constructor -
  * @param err
@@ -6,6 +5,9 @@
  */
 var TeamWeekSheet = function (name) {
     SheetBase.call(this, name);
+
+    // Check Release sheet
+    this.currentRelease = new ReleaseSheet("Release");
 }
 
 // create prototype from parent class
@@ -14,7 +16,29 @@ TeamWeekSheet.prototype = Object.create(SheetBase.prototype);
 // Set the "constructor" property
 TeamWeekSheet.prototype.constructor = TeamWeekSheet;
 
+/**
+ * @param CurrentRelease
+ * @param date
+ */
+SheetBase.prototype.CheckOrAppendRelease = function (CurrentRelease, date) {
+
+    // TODO: calculate next week
+    var today = new Date();
+    var ThisWeek = new Date(this.sheet.getRange('B2').getValue());
+    var NextWeek = new Date(ThisWeek.getFullYear(), ThisWeek.getMonth(), ThisWeek.getDate()+7);
+
+    if ( today > ThisWeek ) {
+        this.sheet.insertColumnAfter(1);
+        this.sheet.getRange("B1").setValue(CurrentRelease);
+        this.sheet.getRange("B2").setValue(NextWeek);
+    }
+
+}
+
 TeamWeekSheet.prototype.Generate = function () {
+
+    // Append column of current release
+    this.CheckOrAppendRelease(this.currentRelease.version, this.currentRelease.merge_date);
 
     // Prepare TeamQuery
     var TeamDOM = new TeamBugQueryBase("DOM", TaipeiDOM);
@@ -26,38 +50,40 @@ TeamWeekSheet.prototype.Generate = function () {
     var TeamPerf = new TeamBugQueryBase("Perf", TaipeiPerf);
     var TeamFrontend = new TeamBugQueryBase("Frontend", [TaipeiFrontend1, TaipeiFrontend2].join(""));
 
-    // Loop Firefox Version Columns
-    var startRow = 1;       // First row of data to process
-    var startColumn = 2;    // First row of data to process
-    var numWeeks = 5;        // Change this to calculate more weeks
-
-    // Fetch the range of cells B1 -> [numVersions]1
-    var FFversion = this.sheet.getRange(startRow, startColumn, 1, numWeeks+1).getValues()[0]
-    var FFWeekDate = this.sheet.getRange(startRow + 1, startColumn, 1, numWeeks+1).getValues()[0]
+    // Loop Firefox Version from columns
+    var rowVersion = 1;         // The row of Versions
+    var rowDate = 2;            // The row of Dates
+    var colStartWeek = 2;       // The first columns of week to be processed
+    var numWeeks = 1;           // Change this to calculate more weeks
 
     // Looping version
-    var resultRow = 3;
-    var resultColumn = startColumn;
+    var rowFirstResult = 3;
     var loopTeam = [TeamDOM, TeamSecurity, TeamNetwork, TeamLayout, TeamGraphic, TeamMedia, TeamPerf];
-    for (var index = 0; index < FFWeekDate.length-1; index++) {
+    for (var weekIndex = 0; weekIndex < numWeeks; weekIndex++) {
+
+        // Fetch version and week
+        var colWeek = colStartWeek+weekIndex;
+        var FFversion = this.sheet.getRange(rowVersion, colWeek, 1, 1).getValue();
+        var FFWeek = this.sheet.getRange(rowDate, colWeek, 1, 1).getValue();
+        var FFPreWeek = this.sheet.getRange(rowDate, colWeek+1, 1, 1).getValue();
 
         // Extract version from version string
-        var Nightly = FFversion[index].split(" ")[1];
+        var Nightly = FFversion.split(" ")[1];
         var Beta = (Number(Nightly)-1).toString();
         var Release = (Number(Nightly)-2).toString();
-        var EndDate = FFWeekDate[index].toISOString().slice(0,10);
-        var StartDate = FFWeekDate[index+1].toISOString().slice(0,10);
+        var EndDate = FFWeek.toISOString().slice(0,10);
+        var StartDate = FFPreWeek.toISOString().slice(0,10);
 
         for (i = 0 ; i < loopTeam.length; i++) {
 
             // Query Team Data
             var rowsTeamResult = 6;
             loopTeam[i].SearchFixedBugFromDateTo(Nightly, StartDate, EndDate);
-            loopTeam[i].RenderBugNumToSheet(this.sheet, resultRow + rowsTeamResult*i + 1, resultColumn+index);
+            loopTeam[i].RenderBugNumToSheet(this.sheet, rowFirstResult + rowsTeamResult*i + 1, colWeek);
             loopTeam[i].SearchFixedBugFromDateTo(Beta, StartDate, EndDate);
-            loopTeam[i].RenderBugNumToSheet(this.sheet, resultRow + rowsTeamResult*i + 2, resultColumn+index);
+            loopTeam[i].RenderBugNumToSheet(this.sheet, rowFirstResult + rowsTeamResult*i + 2, colWeek);
             loopTeam[i].SearchFixedBugFromDateTo(Release, StartDate, EndDate);
-            loopTeam[i].RenderBugNumToSheet(this.sheet, resultRow + rowsTeamResult*i + 3, resultColumn+index);
+            loopTeam[i].RenderBugNumToSheet(this.sheet, rowFirstResult + rowsTeamResult*i + 3, colWeek);
 
         }
     }

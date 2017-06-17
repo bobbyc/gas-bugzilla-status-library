@@ -1,7 +1,6 @@
 var BUGZILLA_REST = "https://bugzilla.mozilla.org/rest/bug?";
 var BUGZILLA_URL = "https://bugzilla.mozilla.org/buglist.cgi?";
 
-
 /**
  * Constructor - SheetBase
  * @param err
@@ -10,15 +9,6 @@ var BUGZILLA_URL = "https://bugzilla.mozilla.org/buglist.cgi?";
 var Bugzilla = function (name) {
     this.name = name || 'BugSheetBase';
     this.sheet = ss.getSheetByName(name);
-}
-
-/**
- * Sheet Generate function
- * @param err
- * @param result
- */
-Bugzilla.prototype.Loop = function () {
-
 }
 
 // Send REST request to url
@@ -37,7 +27,8 @@ function sendRequest(url) {
   var responseBody = response.getContentText()
 
   if (responseCode === 200) {
-    var responseJson = JSON.parse(responseBody)
+    var responseJson = JSON.parse(responseBody);
+    responseJson.body = responseBody;
     return responseJson;
   } else {
     Logger.log(Utilities.formatString("Request failed. Expected 200, got %d: %s", responseCode, responseBody))
@@ -45,15 +36,16 @@ function sendRequest(url) {
 }
 
 function searchBugs(searchTerms) {
-  var url = [BUGZILLA_REST];
+  var query = [BUGZILLA_REST];
 
   // Concat search Terms
   for (var m in searchTerms) {
-    url.push("&", encodeURIComponent(searchTerms[m][0]), "=", encodeURIComponent(searchTerms[m][1]));
+    query.push("&", encodeURIComponent(searchTerms[m][0]), "=", encodeURIComponent(searchTerms[m][1]));
   }
 
   // Do the query
-  return sendRequest(url.join(""));
+  var request = query.join("");
+  return sendRequest(request);
 }
 
 function searchBugsByComponents(searchTerms, components) {
@@ -103,10 +95,47 @@ function buildBugLink(searchTerms) {
   return url;
 }
 
-function test_searchBugs() {
-  var searchTerms = [];
-  var version = "55";
+function countDevelopers (resultBugs){
+  var assignees = {};
 
+  for (var i=0; i < resultBugs.bugs.length; i++) {
+    if (assignees.hasOwnProperty(resultBugs.bugs[i].assigned_to))
+    {
+      assignees[resultBugs.bugs[i].assigned_to].push(resultBugs.bugs[i].id)
+    }
+    else
+    {
+      var Name = resultBugs.bugs[i].assigned_to;
+      var Bug = [resultBugs.bugs[i].id];
+      assignees[Name] = Bug;
+    }
+  }
 
+  return assignees;
+}
+
+function countComponents (resultBugs){
+  var components = {};
+
+  for (var i=0; i < resultBugs.bugs.length; i++) {
+    if (components.hasOwnProperty(resultBugs.bugs[i].component))
+    {
+      components[resultBugs.bugs[i].component].push(resultBugs.bugs[i].id)
+    }
+    else
+    {
+      var Name = resultBugs.bugs[i].component;
+      var Bug = [resultBugs.bugs[i].id];
+      components[Name] = Bug;
+    }
+  }
+
+  var lists= Object.keys(components);
+
+  Logger.log("Count" + lists.length);
+  for (var j=0;j < lists.length; j++)
+   Logger.log(lists[j]);
+
+  return components;
 
 }

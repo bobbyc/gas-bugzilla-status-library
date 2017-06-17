@@ -13,7 +13,9 @@ function TestBugSheet() {
  * @param result
  */
 var SheetBase = function (name) {
-    this.name = name || 'BugSheetBase';
+    this.name = name || 'TempSheet';
+
+    // Get or Insert Target sheet
     this.sheet = ss.getSheetByName(name);
     if (this.sheet == null)
         this.sheet = ss.insertSheet(this.name);
@@ -33,6 +35,26 @@ SheetBase.prototype.Generate = function () {
         this.CountFixedBugsByTeam(startRowRuntime, startColumn + ver, contributorRowRuntime, FFversion[ver], [TaipeiDOM], undefined);
     }
 }
+
+/**
+ * Sheet Generate function
+ * @param err
+ * @param result
+ */
+SheetBase.prototype.CheckOrAppendRelease = function (CurrentRelease, date) {
+
+    // Check Version and Date
+    var FFVersion = this.sheet.getRange("B1").getValue();
+    var FFDate = this.sheet.getRange("B2").getValue();
+
+    if ( FFVersion != CurrentRelease) {
+        this.sheet.insertColumnAfter(1);
+        this.sheet.getRange("B1").setValue(CurrentRelease);
+        this.sheet.getRange("B2").setValue(date);
+    }
+
+}
+
 
 /**
  * Constructor - TeamBugQuery
