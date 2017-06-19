@@ -81,7 +81,7 @@ function searchBugsByComponents(searchTerms, components) {
     }
   }
 
-  return result;
+  return results;
 }
 
 function buildBugLink(searchTerms) {

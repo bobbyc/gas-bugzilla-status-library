@@ -20,7 +20,7 @@ TeamWeekSheet.prototype.constructor = TeamWeekSheet;
  * @param CurrentRelease
  * @param date
  */
-SheetBase.prototype.CheckOrAppendRelease = function (CurrentRelease, date) {
+TeamWeekSheet.prototype.CheckOrAppendRelease = function (CurrentRelease, date) {
 
     // TODO: calculate next week
     var today = new Date();
