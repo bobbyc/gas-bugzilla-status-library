@@ -16,6 +16,9 @@ TeamRegressionSheet.prototype.constructor = TeamRegressionSheet;
 
 TeamRegressionSheet.prototype.Generate = function () {
 
+    // Append column of current release
+    this.CheckOrAppendRelease(this.currentRelease.version, this.currentRelease.merge_date);
+
     // Prepare TeamQuery
     var TeamDOM = new TeamBugQueryBase("Core", TaipeiDOM);
     var TeamNetwork = new TeamBugQueryBase("Core", TaipeiNetwork);
@@ -50,17 +53,17 @@ TeamRegressionSheet.prototype.Generate = function () {
     for (var ver = 0; ver < numVersions; ver++) {
 
         // Fetch the range of cells B1 -> [numVersions]1
-        var FFversion = this.sheet.getRange(rowVersion, colStartVersion+ver, 1, 1).getValue();
+        var FFversion = this.sheet.getRange(rowVersion, colStartVersion + ver, 1, 1).getValue();
         var FFDate = this.sheet.getRange(rowDate, colStartVersion, 1, 1).getValue();
         // Extract version from version string
         var Nightly = FFversion.split(" ")[1];
 
         // Loop each team to get regression+crash count
-        for (i = 0 ; i < loopTeam.length; i++) {
+        for (i = 0; i < loopTeam.length; i++) {
 
             var rowsTeamResult = 10;
             loopTeam[i].SearchFixedRegression(loopTeam[i].name, Nightly);
-            loopTeam[i].RenderToSheet(this.sheet, rowFirstResult + rowsTeamResult*i, colStartVersion+ver);
+            loopTeam[i].RenderToSheet(this.sheet, rowFirstResult + rowsTeamResult * i, colStartVersion + ver);
 
         }
     }

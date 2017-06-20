@@ -7,8 +7,8 @@ var BUGZILLA_URL = "https://bugzilla.mozilla.org/buglist.cgi?";
  * @param result
  */
 var Bugzilla = function (name) {
-    this.name = name || 'BugSheetBase';
-    this.sheet = ss.getSheetByName(name);
+  this.name = name || 'BugSheetBase';
+  this.sheet = ss.getSheetByName(name);
 }
 
 // Send REST request to url
@@ -95,16 +95,14 @@ function buildBugLink(searchTerms) {
   return url;
 }
 
-function countDevelopers (resultBugs){
+function countDevelopers(resultBugs) {
   var assignees = {};
 
-  for (var i=0; i < resultBugs.bugs.length; i++) {
-    if (assignees.hasOwnProperty(resultBugs.bugs[i].assigned_to))
-    {
+  for (var i = 0; i < resultBugs.bugs.length; i++) {
+    if (assignees.hasOwnProperty(resultBugs.bugs[i].assigned_to)) {
       assignees[resultBugs.bugs[i].assigned_to].push(resultBugs.bugs[i].id)
     }
-    else
-    {
+    else {
       var Name = resultBugs.bugs[i].assigned_to;
       var Bug = [resultBugs.bugs[i].id];
       assignees[Name] = Bug;
@@ -114,27 +112,25 @@ function countDevelopers (resultBugs){
   return assignees;
 }
 
-function countComponents (resultBugs){
+function countComponents(resultBugs) {
   var components = {};
 
-  for (var i=0; i < resultBugs.bugs.length; i++) {
-    if (components.hasOwnProperty(resultBugs.bugs[i].component))
-    {
+  for (var i = 0; i < resultBugs.bugs.length; i++) {
+    if (components.hasOwnProperty(resultBugs.bugs[i].component)) {
       components[resultBugs.bugs[i].component].push(resultBugs.bugs[i].id)
     }
-    else
-    {
+    else {
       var Name = resultBugs.bugs[i].component;
       var Bug = [resultBugs.bugs[i].id];
       components[Name] = Bug;
     }
   }
 
-  var lists= Object.keys(components);
+  var lists = Object.keys(components);
 
   Logger.log("Count" + lists.length);
-  for (var j=0;j < lists.length; j++)
-   Logger.log(lists[j]);
+  for (var j = 0; j < lists.length; j++)
+    Logger.log(lists[j]);
 
   return components;
 
