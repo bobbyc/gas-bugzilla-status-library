@@ -1,5 +1,5 @@
 var ss              = SpreadsheetApp.getActiveSpreadsheet();
-var dashboardSheet  = ss.getSheetByName("Overall Dashboard");
+var dashboardSheet  = ss.getSheetByName("Dashboard");
 var weeklySheet     = ss.getSheetByName("Weekly");
 var mailingSheet    = ss.getSheetByName("Mailing");
 var scheduleSheet   = ss.getSheetByName("Release");
@@ -190,117 +190,6 @@ function prioritizeBugs (resultBugs){
     }
 }
 
-function createComponentURI(){
-
-  var Uri = "component=CSS Parsing and Computation";
-
-  Uri = Uri+ "&component=" + "SVG";
-  Uri = Uri+ "&component=" + "Document Navigation";
-  Uri = Uri+ "&component=" + "ImageLib";
-  Uri = Uri+ "&component=" + "Safe Browsing";
-  Uri = Uri+ "&component=" + "web-platform-tests";
-  Uri = Uri+ "&component=" + "Selection";
-  Uri = Uri+ "&component=" + "General";
-  Uri = Uri+ "&component=" + "XPCOM";
-  Uri = Uri+ "&component=" + "XUL Widgets";
-  Uri = Uri+ "&component=" + "Breakpad Integration";
-  Uri = Uri+ "&component=" + "IPC";
-  Uri = Uri+ "&component=" + "Mochitest";
-  Uri = Uri+ "&component=" + "Text Selection";
-  Uri = Uri+ "&component=" + "DOM";
-  Uri = Uri+ "&component=" + "DOM Inspector";
-  Uri = Uri+ "&component=" + "DOM: Animation";
-  Uri = Uri+ "&component=" + "DOM: Apps";
-  Uri = Uri+ "&component=" + "DOM: Contacts";
-  Uri = Uri+ "&component=" + "DOM: Content Processes";
-  Uri = Uri+ "&component=" + "DOM: Core &amp; HTML";
-  Uri = Uri+ "&component=" + "DOM: CSS Object Model";
-  Uri = Uri+ "&component=" + "DOM: Device Interfaces";
-  Uri = Uri+ "&component=" + "DOM: Events";
-  Uri = Uri+ "&component=" + "DOM: IndexedDB";
-  Uri = Uri+ "&component=" + "DOM: Push Notifications";
-  Uri = Uri+ "&component=" + "DOM: Security";
-  Uri = Uri+ "&component=" + "DOM: Service Workers";
-  Uri = Uri+ "&component=" + "DOM: Workers";
-  Uri = Uri+ "&component=" + "Layout";
-  Uri = Uri+ "&component=" + "Layout: Block and Inline";
-  Uri = Uri+ "&component=" + "Layout: Floats";
-  Uri = Uri+ "&component=" + "Layout: Form Controls";
-  Uri = Uri+ "&component=" + "Layout: HTML Frames";
-  Uri = Uri+ "&component=" + "Layout: Images";
-  Uri = Uri+ "&component=" + "Layout: Misc Code";
-  Uri = Uri+ "&component=" + "Layout: R &amp; A Pos";
-  Uri = Uri+ "&component=" + "Layout: Tables";
-  Uri = Uri+ "&component=" + "Layout: Text";
-  Uri = Uri+ "&component=" + "Layout: View Rendering";
-  Uri = Uri+ "&component=" + "Security";
-  Uri = Uri+ "&component=" + "Security Assurance";
-  Uri = Uri+ "&component=" + "Security Assurance: Applications";
-  Uri = Uri+ "&component=" + "Security Assurance: FxOS Review";
-  Uri = Uri+ "&component=" + "Security Assurance: Review Request";
-  Uri = Uri+ "&component=" + "Security Stubs";
-  Uri = Uri+ "&component=" + "Security: CAPS";
-  Uri = Uri+ "&component=" + "Security: Process Sandboxing";
-  Uri = Uri+ "&component=" + "Security: PSM";
-  Uri = Uri+ "&component=" + "Security: S/MIME";
-  Uri = Uri+ "&component=" + "Security: UI";
-  Uri = Uri+ "&component=" + "Canvas: 2D";
-  Uri = Uri+ "&component=" + "Canvas: WebGL";
-  Uri = Uri+ "&component=" + "Audio/Video";
-  Uri = Uri+ "&component=" + "Audio/Video: cubeb";
-  Uri = Uri+ "&component=" + "Audio/Video: GMP";
-  Uri = Uri+ "&component=" + "Audio/Video: MediaStreamGraph";
-  Uri = Uri+ "&component=" + "Audio/Video: Playback";
-  Uri = Uri+ "&component=" + "Audio/Video: Recording";
-  Uri = Uri+ "&component=" + "Graphics";
-  Uri = Uri+ "&component=" + "Graphics: Layers";
-  Uri = Uri+ "&component=" + "Graphics: Text";
-  Uri = Uri+ "&component=" + "Networking";
-  Uri = Uri+ "&component=" + "Networking: Cache";
-  Uri = Uri+ "&component=" + "Networking: Cookies";
-  Uri = Uri+ "&component=" + "Networking: DNS";
-  Uri = Uri+ "&component=" + "Networking: Domain Lists";
-  Uri = Uri+ "&component=" + "Networking: File";
-  Uri = Uri+ "&component=" + "Networking: FTP";
-  Uri = Uri+ "&component=" + "Networking: HTTP";
-  Uri = Uri+ "&component=" + "Networking: IMAP";
-  Uri = Uri+ "&component=" + "Networking: JAR";
-  Uri = Uri+ "&component=" + "Networking: NNTP";
-  Uri = Uri+ "&component=" + "Networking: POP";
-  Uri = Uri+ "&component=" + "Networking: SMTP";
-  Uri = Uri+ "&component=" + "Networking: WebSockets";
-  Uri = Uri+ "&component=" + "Networking";
-  Uri = Uri+ "&component=" + "Networking: Cache";
-  Uri = Uri+ "&component=" + "Networking: Cookies";
-  Uri = Uri+ "&component=" + "Networking: DNS";
-  Uri = Uri+ "&component=" + "Networking: Domain Lists";
-  Uri = Uri+ "&component=" + "Networking: File";
-  Uri = Uri+ "&component=" + "Networking: FTP";
-  Uri = Uri+ "&component=" + "Networking: HTTP";
-  Uri = Uri+ "&component=" + "Networking: IMAP";
-  Uri = Uri+ "&component=" + "Networking: JAR";
-  Uri = Uri+ "&component=" + "Networking: NNTP";
-  Uri = Uri+ "&component=" + "Networking: POP";
-  Uri = Uri+ "&component=" + "Networking: SMTP";
-  Uri = Uri+ "&component=" + "API";
-  Uri = Uri+ "&component=" + "API Requests";
-  Uri = Uri+ "&component=" + "API: CSSOM";
-  Uri = Uri+ "&component=" + "API: Device API";
-  Uri = Uri+ "&component=" + "API: DOM";
-  Uri = Uri+ "&component=" + "API: File API";
-  Uri = Uri+ "&component=" + "API: HTML";
-  Uri = Uri+ "&component=" + "API: IndexedDB";
-  Uri = Uri+ "&component=" + "API: Miscellaneous";
-  Uri = Uri+ "&component=" + "API: SVG";
-  Uri = Uri+ "&component=" + "API: Web Animation";
-  Uri = Uri+ "&component=" + "API: Web Audio";
-  Uri = Uri+ "&component=" + "API: Web Sockets";
-  Uri = Uri+ "&component=" + "API: Web Workers";
-  Uri = Uri+ "&component=" + "API: WebRTC";
-
-  var result = encodeURI(Uri);
-  Logger.log(result);
-}
 
 
 function doGet(request) {

@@ -28,8 +28,6 @@ TeamOverallSheet.prototype.Generate = function () {
     var TeamAndroid = new TeamBugQueryBase("Firefox for Android", undefined);
 
     // Loop Firefox Version from columns
-    var rowVersion = 1;         // The row of Versions
-    var rowDate = 2;            // The row of Dates
     var colStartVersion = 2;    // The first columns of version to be processed
     var numVersions = 1;        // How many version need to be processd?
 
@@ -39,16 +37,15 @@ TeamOverallSheet.prototype.Generate = function () {
     for (var ver = 0; ver < numVersions; ver++) {
 
         // Fetch the range of cells B1 -> [numVersions]1
-        var FFversion = this.sheet.getRange(rowVersion, colStartVersion+ver, 1, 1).getValue();
-        var FFDate = this.sheet.getRange(rowDate, colStartVersion, 1, 1).getValue();
+        var FFversion = this.sheet.getRange(this.rowVersion, colStartVersion+ver, 1, 1).getValue();
+        var FFDate = this.sheet.getRange(this.rowDate, colStartVersion, 1, 1).getValue();
 
         // Extract version from version string
-        var Nightly = FFversion.split(" ")[1];
         for (i = 0 ; i < loopTeam.length; i++) {
 
             // Search bugs in target teams
             var rowsTeamResult = 10;
-            loopTeam[i].SearchFixedBug(loopTeam[i].name, Nightly);
+            loopTeam[i].SearchFixedBug(loopTeam[i].name, FFversion);
             loopTeam[i].RenderToSheet(this.sheet, rowFirstResult + rowsTeamResult*i, colStartVersion+ver);
         }
     }

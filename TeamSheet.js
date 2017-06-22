@@ -23,14 +23,15 @@ TeamSheet.prototype.Generate = function () {
     this.CheckOrAppendRelease(this.currentRelease.version, this.currentRelease.merge_date);
 
     // Prepare TeamQuery
-    var TeamDOM = new TeamBugQueryBase("DOM", TaipeiDOM);
-    var TeamNetwork = new TeamBugQueryBase("Network", TaipeiNetwork);
-    var TeamSecurity = new TeamBugQueryBase("Security", TaipeiSecurity);
-    var TeamLayout = new TeamBugQueryBase("Layout", TaipeiLayout);
-    var TeamGraphic = new TeamBugQueryBase("Graphic", TaipeiGraphic);
-    var TeamMedia = new TeamBugQueryBase("Media", TaipeiMedia);
-    var TeamPerf = new TeamBugQueryBase("Perf", TaipeiPerf);
-    var TeamFrontend = new TeamBugQueryBase("Frontend", [TaipeiFrontend1, TaipeiFrontend2].join(""));
+    var TeamDOM = new TeamBugQueryBase("DOM Team", TaipeiDOM);
+    var TeamNetwork = new TeamBugQueryBase("Network Team", TaipeiNetwork);
+    var TeamSecurity = new TeamBugQueryBase("Security Team", TaipeiSecurity);
+    var TeamLayout = new TeamBugQueryBase("Layout Team", TaipeiLayout);
+    var TeamGraphic = new TeamBugQueryBase("Graphic Team", TaipeiGraphic);
+    var TeamMedia = new TeamBugQueryBase("Media Team", TaipeiMedia);
+    var TeamPerf = new TeamBugQueryBase("Perf Team", TaipeiPerf);
+    var TeamFrontend = new TeamBugQueryBase("Frontend Team", [TaipeiFrontend1, TaipeiFrontend2].join(""));
+    var TeamFennec = new TeamBugQueryBase("Fennec Team", TaipeiFennec);
 
     // Loop Firefox Version from columns
     var colStartVersion = 2;    // The first columns of version to be processed
@@ -38,7 +39,7 @@ TeamSheet.prototype.Generate = function () {
 
     // Loop
     var rowFirstResult = 3;
-    var loopTeam = [TeamDOM, TeamSecurity, TeamNetwork, TeamLayout, TeamGraphic, TeamMedia, TeamPerf, TeamFrontend];
+    var loopTeam = [TeamDOM, TeamSecurity, TeamNetwork, TeamLayout, TeamGraphic, TeamMedia, TeamPerf, TeamFrontend, TeamFennec];
     for (var ver = 0; ver < numVersions; ver++) {
 
         // Fetch the range of cells B1 -> [numVersions]1
@@ -50,7 +51,7 @@ TeamSheet.prototype.Generate = function () {
 
             // Render results
             var rowsTeamResult = 10;
-            loopTeam[i].SearchFixedBugByAssignees(undefined, FFversion);
+            loopTeam[i].SearchFixedBugByAssigned(undefined, FFversion);
             loopTeam[i].RenderToSheet(this.sheet, rowFirstResult + rowsTeamResult*i, colStartVersion+ver);
         }
     }

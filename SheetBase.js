@@ -177,11 +177,14 @@ TeamBugQueryBase.prototype.SearchBugsAndMerge = function (query) {
  */
 TeamBugQueryBase.prototype.SearchFixedBug = function (product, version) {
 
-    // Process firefox version
+    // Reset this bug data
+    this.Reset();
+
+    // Process firefox
+    Logger.log(version);
     var ver = version.split(" ")[1];
 
     // Define search terms
-    this.buglist = undefined;
     var TeamQuery = [];
     if (product != undefined) {
         TeamQuery.push(["product", product]);
@@ -202,13 +205,18 @@ TeamBugQueryBase.prototype.SearchFixedBug = function (product, version) {
     return this.SearchBugs(TeamQuery);
 }
 
-TeamBugQueryBase.prototype.SearchFixedBugByAssignees = function (product, version) {
+/**
+ * Constructor - SheetBase
+ * @param product
+ * @param version Follow the format "Firefox 55"
+ */
+TeamBugQueryBase.prototype.SearchFixedBugByAssigned = function (product, version) {
 
     // Reset this bug data
     this.Reset();
 
     // Process firefox version
-    var ver = version.split(" ")[1];
+    var ver = version.split(" ")[1].trim();
 
     // Split and Trim the Team list
     var Assignees = this.members.split(',').map(function (item) { return item.trim(); });
@@ -286,6 +294,38 @@ TeamBugQueryBase.prototype.SearchFixedBugFromDateTo = function (version, datefro
     return this.SearchBugs(TeamQuery);
 }
 
+TeamBugQueryBase.prototype.SearchFixedBugByAssignedFromDateTo = function (version, datefrom, dateto) {
+
+    // Reset this bug data
+    this.Reset();
+
+    // Process firefox version
+    var ver = version.split(" ")[1].trim();
+
+    // Split and Trim the Team list
+    var Assignees = this.members.split(',').map(function (item) { return item.trim(); });
+    for (index in Assignees) {
+
+        // Define search terms
+        var TeamQuery = [];
+        TeamQuery.push(["include_fields", "id,priority,assigned_to,component,keywords,target_milestone"]);
+        TeamQuery.push(["bug_status", "RESOLVED"], ["bug_status", "VERIFIED"]);
+        TeamQuery.push(["resolution", "FIXED"]);
+        TeamQuery.push(["f1", "cf_status_firefox" + ver]);
+        TeamQuery.push(["o1", "equals"]);
+        TeamQuery.push(["v1", "fixed"]);
+        TeamQuery.push(["f2", "assigned_to"]);
+        TeamQuery.push(["o2", "equals"]);
+        TeamQuery.push(["v2", Assignees[index]]);
+        if (datefrom != undefined) TeamQuery.push(["chfieldfrom", datefrom]);
+        if (dateto != undefined) TeamQuery.push(["chfieldto", dateto]);
+
+        this.SearchBugsAndMerge(TeamQuery);
+    }
+    // Do the query
+    return this.buglist;
+}
+
 TeamBugQueryBase.prototype.SearchFixedBugByComponens = function (version, components) {
 
     // Define search terms
@@ -311,21 +351,26 @@ TeamBugQueryBase.prototype.SearchFixedBugByComponens = function (version, compon
 
 TeamBugQueryBase.prototype.RenderToSheet = function (sheet, row, column) {
 
-    var Devs = countDevelopers(this.buglist)
-    var nTeamSize = Object.keys(Devs).length;
+    if (this.buglist != undefined)
+    {
+        var Devs = countDevelopers(this.buglist)
+        var nTeamSize = Object.keys(Devs).length;
 
-    // Post results to TargetSheets
-    //TargetSheet.getRange(bugsRow, bugsColumn).setFormula("=hyperlink(\"" + link + "\",\"Bugzilla\")");
-    if (sheet != undefined) {
-        sheet.getRange(row, column).setValue(this.nTeamSize);
-        sheet.getRange(row + 1, column).setValue(this.countP1);
-        sheet.getRange(row + 2, column).setValue(this.countP2);
-        sheet.getRange(row + 3, column).setValue(this.countP3);
-        sheet.getRange(row + 4, column).setValue(this.countP4);
-        sheet.getRange(row + 5, column).setValue(this.countP5);
-        sheet.getRange(row + 6, column).setValue(this.countPN);
-        sheet.getRange(row + 7, column).setValue(this.nBugs);
-        sheet.getRange(row + 8, column).setValue(nTeamSize);
+        // Post results to TargetSheets
+        //TargetSheet.getRange(bugsRow, bugsColumn).setFormula("=hyperlink(\"" + link + "\",\"Bugzilla\")");
+        if (sheet != undefined) {
+            sheet.getRange(row, column).setValue(this.nTeamSize);
+            sheet.getRange(row + 1, column).setValue(this.countP1);
+            sheet.getRange(row + 2, column).setValue(this.countP2);
+            sheet.getRange(row + 3, column).setValue(this.countP3);
+            sheet.getRange(row + 4, column).setValue(this.countP4);
+            sheet.getRange(row + 5, column).setValue(this.countP5);
+            sheet.getRange(row + 6, column).setValue(this.countPN);
+            sheet.getRange(row + 7, column).setValue(this.nBugs);
+            sheet.getRange(row + 8, column).setValue(nTeamSize);
+        }
+    } else {
+        Logger.log(Utilities.formatString("RenderToSheet(), Buglist is undefined"))
     }
 }
 
