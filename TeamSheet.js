@@ -51,7 +51,7 @@ TeamSheet.prototype.Generate = function () {
 
             // Render results
             var rowsTeamResult = 10;
-            loopTeam[i].SearchFixedBugByAssigned(undefined, FFversion);
+            loopTeam[i].SearchFixedBug(undefined, FFversion);
             loopTeam[i].RenderToSheet(this.sheet, rowFirstResult + rowsTeamResult*i, colStartVersion+ver);
         }
     }

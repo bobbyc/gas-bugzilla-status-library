@@ -80,11 +80,11 @@ TeamWeekSheet.prototype.Generate = function () {
 
             // Query Team Data
             var rowsTeamResult = 6;
-            loopTeam[i].SearchFixedBugByAssignedFromDateTo(NightlyVersion, StartDate, EndDate);
+            loopTeam[i].SearchFixedBugFromDateTo(NightlyVersion, StartDate, EndDate);
             loopTeam[i].RenderBugNumToSheet(this.sheet, rowFirstResult + rowsTeamResult * i + 1, colWeek);
-            loopTeam[i].SearchFixedBugByAssignedFromDateTo(BetaVersion, StartDate, EndDate);
+            loopTeam[i].SearchFixedBugFromDateTo(BetaVersion, StartDate, EndDate);
             loopTeam[i].RenderBugNumToSheet(this.sheet, rowFirstResult + rowsTeamResult * i + 2, colWeek);
-            loopTeam[i].SearchFixedBugByAssignedFromDateTo(ReleaseVersion, StartDate, EndDate);
+            loopTeam[i].SearchFixedBugFromDateTo(ReleaseVersion, StartDate, EndDate);
             loopTeam[i].RenderBugNumToSheet(this.sheet, rowFirstResult + rowsTeamResult * i + 3, colWeek);
 
         }

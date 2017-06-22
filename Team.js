@@ -24,31 +24,38 @@ var TaipeiFrontend2 = "timdream@gmail.com, ralin@mozilla.com, evan@tseng.io, gas
 var TaipeiFennec    = "cnevinchen@gmail.com, walkingice0204@gmail.com, topwu.tw@gmail.com, osimpleo@gmail.com, max@mxli.us";
 
 // Mozilla engineering teams
-var MozillaDOM     = "overholt, bkelly, annevk, mcaceres, catalin.badea392, afarre, \
-                     michael@thelayzells.com, amarchesini, jvarga, ehsan, hsivonen, \
-                     josh@joshmatthews.net, bugmail@asutherland.org, kyle@nonpolynomial.com, \
-                     wchen, bugs@pettay.fi";
+var MozillaDOM     = "overholt@mozilla.com, mcaceres@mozilla.com, bkelly@mozilla.com, annevk@annevk.nl, yrliou@gmail.com,\
+                     catalin.badea392@gmail.com, afarre@mozilla.com, michael@thelayzells.com, amarchesini@mozilla.com, jvarga@mozilla.com, \
+                     ehsan@mozilla.com, hsivonen@hsivonen.fi, mrbkap@mozilla.com, continuation@gmail.com, bugmail@asutherland.org, \
+                     kyle@nonpolynomial.com, wchen@mozilla.com, bugs@pettay.fi";
 
-var MozillaSecurity= "sdeckelmann, mwobensmith, jld, huseby, kjozwiak, dveditz, tanvi, tom, kwilson, mgoodwin, \
-                     jjones, franziskuskiefer, ttaubert, dkeeler, ptheriault, julian.r.hector, kmckinley, jkt, \
-                     stephouillon, cr, francois, ckerschb, fbraun, abillings, twsmith, jschwartzentruber, choller, \
-                     rforbes, cdiehl, gary@rumblingedge.com";
+var MozillaSecurity= "sdeckelmann@mozilla.com, \
+                      wleung@mozilla.com, kjozwiak@mozilla.com, jkt@mozilla.com, lcrouch@mozilla.com, ckerschb@christophkerschbaumer.com, \
+                      francois@mozilla.com, tanvi@mozilla.com, jjones@mozilla.com, franziskuskiefer@gmail.com, kmckinley@mozilla.com, \
+                      mwobensmith@mozilla.com, mgoodwin@mozilla.com, ttaubert@mozilla.com, dkeeler@mozilla.com, \
+                      tom@mozilla.com, sfewer@mozilla.com, jmathies@mozilla.com, kwilson@mozilla.com, \
+                      ptheriault@mozilla.com, julian.r.hector@gmail.com, fbraun@mozilla.com, cr@mozilla.com, psequeira@mozilla.com, \
+                      stephouillon@mozilla.com, bdanforth@mozilla.com, \
+                      abillings@mozilla.com, jschwartzentruber@mozilla.com, jkratzer@mozilla.com, twsmith@mozilla.com, cdiehl@mozilla.com, \
+                      rforbes@mozilla.com, gary@rumblingedge.com";
 
-var MozillaNetwork = "Jduell.mcbugs, daniel@haxx.se, dd.mozilla, valentin.gosu, hurley, \
-                     michal.novotny, honzab.moz";
+var MozillaNetwork = "jduell.mcbugs@gmail.com, daniel@haxx.se, dd.mozilla@gmail.com, valentin.gosu@gmail.com, hurley@mozilla.com, \
+                     michal.novotny@gmail.com, honzab.moz@firemni.cz";
 
-var MozillaLayout  = "bugs@junglecode.net, schneider@jancona.com, cam@mcc.id.au, \
-                     kgilbert, xidorn+moz@upsuper.org, npancholi, bwerth, dholbert, \
-                     tantek@cs.stanford.edu, jwatt@jwatt.org, matt.woodrow, mats, mstange@themasta.com, \
-                     jfkthame, bbirtles, mantaroh, hiikezoe, m_kato, masayuki";
+var MozillaLayout  = "bugs@junglecode.net, npancholi@mozilla.com, mikokm@gmail.com, bwerth@mozilla.com, xidorn+moz@upsuper.org, hikezoe@mozilla.com, \
+                      cam@mcc.id.au, dakatsuka@mozilla.com, mnakano@mozilla.com, mantaroh@gmail.com, m_kato@ga2.so-net.ne.jp, \
+                     kgilbert@mozilla.com, jryans@gmail.com, jwatt@jwatt.org, jfkthame@gmail.com, bobbyholley@gmail.com, \
+                     mats@mozilla.com, bbirtles@mozilla.com, mstange@themasta.com, schneider@jancona.com, tantek@cs.stanford.edu, \
+                     matt.woodrow@gmail.com, dholbert@mozilla.com";
 
 var MozillaGraphic = "milan@mozilla.com, lsalzman@mozilla.com, abeingessner@mozilla.com, aosmond@mozilla.com, rhunt@eqrion.net, \
                      kvark@mozilla.com, domfarolino@gmail.com, svargas@mozilla.com, mchang@mozilla.com, botond@mozilla.com, \
                      anthony.s.hughes@gmail.com, dvander@alliedmods.net, tnikkel@gmail.com, bugmail@mozilla.staktrace.com, jgilbert@mozilla.com, \
                      jmuizelaar@mozilla.com, sotaro.ikeda.g@gmail.com, bas@basschouten.com, jnicol@mozilla.com, nical.bugzilla@gmail.com";
 
-var MozillaMedia   = "ajones, jyavenard, gsquelart, bvandyk, jharris, dglastonbury, dmajor, \
-                     cpearce, kinetik, giles, karlt";
+var MozillaMedia   = "ajones@mozilla.com, jyavenard@mozilla.com, gsquelart@mozilla.com, bvandyk@mozilla.com, jharris@mozilla.com, \
+                     dglastonbury@mozilla.com, dmajor@mozilla.com, cpearce@mozilla.com, kinetik@mozilla.com, giles@mozilla.com,  \
+                     karlt@mozilla.com";
 
 // TODO: add teams
 var MozillaPerf     = "aaa@mozilla.com";

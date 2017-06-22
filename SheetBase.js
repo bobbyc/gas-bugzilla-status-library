@@ -23,6 +23,7 @@ var SheetBase = function (name) {
     // Sheet render offsets
     this.rowVersion = 1;         // The row of Versions
     this.rowDate = 2;            // The row of Dates
+    this.colStartDate = 2;       // The first columns of date to be processed
 
 }
 
@@ -53,7 +54,7 @@ SheetBase.prototype.CheckOrAppendRelease = function (CurrentRelease, date) {
     var FFDate = this.sheet.getRange("B2").getValue();
 
     if (FFVersion != CurrentRelease) {
-        this.sheet.insertColumnAfter(1);
+        this.sheet.insertColumnBefore(this.colStartDate);
         this.sheet.getRange("B1").setValue(CurrentRelease);
         this.sheet.getRange("B2").setValue(date);
     }
@@ -175,14 +176,14 @@ TeamBugQueryBase.prototype.SearchBugsAndMerge = function (query) {
  * @param product
  * @param version Follow the format "Firefox 55"
  */
-TeamBugQueryBase.prototype.SearchFixedBug = function (product, version) {
+TeamBugQueryBase.prototype.SearchFixedBug = function (product, firefoxVersion) {
 
     // Reset this bug data
     this.Reset();
 
     // Process firefox
-    Logger.log(version);
-    var ver = version.split(" ")[1];
+    var ver = firefoxVersion.split(" ")[1].trim();
+    var mozillaVersion = ["mozilla", ver].join("");
 
     // Define search terms
     var TeamQuery = [];
@@ -192,13 +193,15 @@ TeamBugQueryBase.prototype.SearchFixedBug = function (product, version) {
     TeamQuery.push(["include_fields", "id,priority,assigned_to,component,keywords"]);
     TeamQuery.push(["bug_status", "RESOLVED"], ["bug_status", "VERIFIED"]);
     TeamQuery.push(["resolution", "FIXED"]);
-    TeamQuery.push(["f1", "cf_status_firefox" + ver]);
-    TeamQuery.push(["o1", "equals"]);
-    TeamQuery.push(["v1", "fixed"]);
+    //TeamQuery.push(["f1", "cf_status_firefox" + ver]);
+    //TeamQuery.push(["o1", "equals"]);
+    //TeamQuery.push(["v1", "fixed"]);
+    TeamQuery.push(["target_milestone", firefoxVersion]);
+    TeamQuery.push(["target_milestone", mozillaVersion]);
     if (this.members != undefined) {
-        TeamQuery.push(["f2", "assigned_to"]);
-        TeamQuery.push(["o2", "anywordssubstr"]);
-        TeamQuery.push(["v2", this.members]);
+        TeamQuery.push(["f1", "assigned_to"]);
+        TeamQuery.push(["o1", "anyexact"]);
+        TeamQuery.push(["v1", this.members]);
     }
 
     // Do the query
@@ -246,24 +249,29 @@ TeamBugQueryBase.prototype.SearchFixedBugByAssigned = function (product, version
 
 TeamBugQueryBase.prototype.SearchFixedRegression = function (product, version) {
 
+    // Reset this bug data
+    this.Reset();
+
+    // Process firefox version
+    var ver = version.split(" ")[1].trim();
+    var mozillaVer = ["mozilla", ver].join("");
+
     // Define search terms
-    this.buglist = undefined;
     var TeamQuery = [];
     if (product != undefined) {
         TeamQuery.push(["product", product]);
     }
-    TeamQuery.push(["include_fields", "id,priority,assigned_to,component,keywords"]);
+    TeamQuery.push(["include_fields", "id,priority,assigned_to,component,keywords,target_milestone"]);
     TeamQuery.push(["bug_status", "RESOLVED"], ["bug_status", "VERIFIED"]);
     TeamQuery.push(["resolution", "FIXED"]);
     TeamQuery.push(["keywords", "regression, crash"]);
     TeamQuery.push(["keywords_type", "anywords"]);
-    TeamQuery.push(["f1", "cf_status_firefox" + version]);
-    TeamQuery.push(["o1", "equals"]);
-    TeamQuery.push(["v1", "fixed"]);
+    TeamQuery.push(["target_milestone", version]);
+    TeamQuery.push(["target_milestone", mozillaVer]);
     if (this.members != undefined) {
-        TeamQuery.push(["f2", "assigned_to"]);
-        TeamQuery.push(["o2", "anywordssubstr"]);
-        TeamQuery.push(["v2", this.members]);
+        TeamQuery.push(["f1", "assigned_to"]);
+        TeamQuery.push(["o1", "anyexact"]);
+        TeamQuery.push(["v1", this.members]);
     }
 
     // Do the query
@@ -272,19 +280,24 @@ TeamBugQueryBase.prototype.SearchFixedRegression = function (product, version) {
 
 TeamBugQueryBase.prototype.SearchFixedBugFromDateTo = function (version, datefrom, dateto) {
 
+    // Reset this bug data
+    this.Reset();
+
+    // Process firefox version
+    var ver = version.split(" ")[1].trim();
+
     // Define search terms
-    this.buglist = undefined;
     var TeamQuery = [];
     //TeamQuery.push(["query_format", "advanced"]);
     TeamQuery.push(["include_fields", "id,priority,assigned_to,component"]);
     TeamQuery.push(["bug_status", "RESOLVED"], ["bug_status", "VERIFIED"]);
     TeamQuery.push(["resolution", "FIXED"]);
-    TeamQuery.push(["f1", "cf_status_firefox" + version]);
+    TeamQuery.push(["f1", "cf_status_firefox" + ver]);
     TeamQuery.push(["o1", "equals"]);
     TeamQuery.push(["v1", "fixed"]);
     if (this.members != undefined) {
         TeamQuery.push(["f2", "assigned_to"]);
-        TeamQuery.push(["o2", "anywordssubstr"]);
+        TeamQuery.push(["o2", "anyexact"]);
         TeamQuery.push(["v2", this.members]);
     }
     if (datefrom != undefined) TeamQuery.push(["chfieldfrom", datefrom]);
@@ -339,7 +352,7 @@ TeamBugQueryBase.prototype.SearchFixedBugByComponens = function (version, compon
     TeamQuery.push(["v1", "fixed"]);
     if (this.members != undefined) {
         TeamQuery.push(["f2", "assigned_to"]);
-        TeamQuery.push(["o2", "anywordssubstr"]);
+        TeamQuery.push(["o2", "anyexact"]);
         TeamQuery.push(["v2", this.members]);
     }
 
