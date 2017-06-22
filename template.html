@@ -10,45 +10,24 @@
   <table style="width:100%">
     <thead style="background-color:#EEE;">
       <tr>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">Current Version</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">Release Date</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">Mozilla Total</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">Taipei Firefox</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">Taipei Platform</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">Taipei Total</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">Headcount Ratio</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">Bug Ratio</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">Non-TDC Bug/Ppl</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">TDC Bug/Ppl</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">P1</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">P2</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">P3</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">P4</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">P5</th>
-        <th style="border: 1px solid #999999; padding: 3px 10px;">--</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Version</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Weeks</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Merge Date</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Days to Go</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Firefox</th>
+        <th style="border: 1px solid #999999; padding: 3px 10px;">Firefox for Android</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td style="border: 1px solid #999999; padding: 3px 10px;"><?= currentVersion ?></td>
+        <td style="border: 1px solid #999999; padding: 3px 10px;"><?= releaseWeek ?></td>
         <td style="border: 1px solid #999999; padding: 3px 10px;"><?= releaseDate ?></td>
-        <td style="border: 1px solid #999999; padding: 3px 10px;"><a href="<?= overallLink ?>"><?=  overallCell ?></a></td>
-        <td style="border: 1px solid #999999; padding: 3px 10px;"><a href="<?= tdcFirefoxlLink ?>"><?= tdcFirefoxCell ?></a></td>
-        <td style="border: 1px solid #999999; padding: 3px 10px;"><a href="<?= tdcPlatformlLink ?>"><?= tdcPlatformCell ?></a></td>
-        <td style="border: 1px solid #999999; padding: 3px 10px;"><?= tdcTotalCell ?> </td>
-        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:#f6ccc9;"><?= nTDCHCRatio ?>%</td>
-        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:#ddbbcc;"><?= nTDCBugPplRatio ?>%</td>
-        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:#ffe397;"><?= nNonTDCBugPplRatio ?></td>
-        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:#b9d1f6;"><?= nTDCPercentage ?></td>
-        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:<?= tdcP1CellBackground ?>;"><?= nP1Percentage ?>%</td>
-        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:<?= tdcP2CellBackground ?>;"><?= nP2Percentage ?>%</td>
-        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:<?= tdcP3CellBackground ?>;"><?= nP3Percentage ?>%</td>
-        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:<?= tdcP4CellBackground ?>;"><?= nP4Percentage ?>%</td>
-        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:<?= tdcP5CellBackground ?>;"><?= nP5Percentage ?>%</td>
-        <td style="border: 1px solid #999999; padding: 3px 10px; background-color:<?= tdcPNCellBackground ?>;"><?= nPNPercentage ?>%</td>
+        <td style="border: 1px solid #999999; padding: 3px 10px;"><?= daysToGo ?></a></td>
+        <td style="border: 1px solid #999999; padding: 3px 10px;"><?= FirefoxWeeklyCount ?></a></td>
+        <td style="border: 1px solid #999999; padding: 3px 10px;"><?= AndroidWeeklyCount ?></a></td>
       </tr>
     </tbody>
-
   </table>
   <table style=border-width:0;border-collapse:collapse;border-spacing:1;border:0>
     <tr>
