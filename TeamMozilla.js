@@ -33,8 +33,7 @@ MozillaSheet.prototype.Generate = function () {
     var TeamFrontend = new TeamBugQueryBase("Frontend", MozillaFrontend);
 
     // Loop Firefox Version from columns
-    var colStartVersion = 2;    // The first columns of version to be processed
-    var numVersions = 1;        // How many version need to be processd?
+    var numVersions = 2;        // How many version need to be processd?
 
     // Loop
     var rowFirstResult = 3;
@@ -42,16 +41,16 @@ MozillaSheet.prototype.Generate = function () {
     for (var ver = 0; ver < numVersions; ver++) {
 
         // Fetch the range of cells B1 -> [numVersions]1
-        var FFversion = this.sheet.getRange(this.rowVersion, colStartVersion+ver, 1, 1).getValue();
-        var FFDate = this.sheet.getRange(this.rowDate, colStartVersion, 1, 1).getValue();
+        var FFversion = this.sheet.getRange(this.rowVersion, this.colStartDate + ver, 1, 1).getValue();
+        var FFDate = this.sheet.getRange(this.rowDate, this.colStartDate, 1, 1).getValue();
 
         // Extract version from version string
-        for (i = 0 ; i < loopTeam.length; i++) {
+        for (i = 0; i < loopTeam.length; i++) {
 
             // Render results
             var rowsTeamResult = 10;
             loopTeam[i].SearchFixedBug(undefined, FFversion);
-            loopTeam[i].RenderToSheet(this.sheet, rowFirstResult + rowsTeamResult*i, colStartVersion+ver);
+            loopTeam[i].RenderToSheet(this.sheet, rowFirstResult + rowsTeamResult * i, this.colStartDate + ver);
         }
     }
 }

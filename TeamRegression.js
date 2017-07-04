@@ -43,26 +43,25 @@ TeamRegressionSheet.prototype.Generate = function () {
     var TeamAndroid = new TeamBugQueryBase("Firefox for Android", undefined);
 
     // Loop Firefox Version from columns
-    var colStartVersion = 2;    // The first columns of version to be processed
-    var numVersions = 1;        // How many version need to be processd?
+    var numVersions = 2;        // How many version need to be processd?
 
     // Loop
     var rowFirstResult = 3;
     var loopTeam = [TeamDOM, TeamSecurity, TeamNetwork, TeamLayout, TeamGraphic, TeamMedia, TeamPerf,
-                    TeamMozDOM, TeamMozSecurity, TeamMozNetwork, TeamMozLayout, TeamMozGraphic, TeamMozMedia,
-                    TeamFirefox, TeamCore, TeamAndroid];
+        TeamMozDOM, TeamMozSecurity, TeamMozNetwork, TeamMozLayout, TeamMozGraphic, TeamMozMedia,
+        TeamFirefox, TeamCore, TeamAndroid];
     for (var ver = 0; ver < numVersions; ver++) {
 
         // Fetch the range of cells B1 -> [numVersions]1
-        var FFversion = this.sheet.getRange(this.rowVersion, colStartVersion + ver, 1, 1).getValue();
-        var FFDate = this.sheet.getRange(this.rowDate, colStartVersion, 1, 1).getValue();
+        var FFversion = this.sheet.getRange(this.rowVersion, this.colStartDate + ver, 1, 1).getValue();
+        var FFDate = this.sheet.getRange(this.rowDate, this.colStartDate, 1, 1).getValue();
 
         // Loop each team to get regression+crash count
         for (i = 0; i < loopTeam.length; i++) {
 
             var rowsTeamResult = 10;
             loopTeam[i].SearchFixedRegression(loopTeam[i].name, FFversion);
-            loopTeam[i].RenderToSheet(this.sheet, rowFirstResult + rowsTeamResult * i, colStartVersion + ver);
+            loopTeam[i].RenderToSheet(this.sheet, rowFirstResult + rowsTeamResult * i, this.colStartDate + ver);
 
         }
     }

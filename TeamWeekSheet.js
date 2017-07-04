@@ -51,8 +51,7 @@ TeamWeekSheet.prototype.Generate = function () {
     var TeamFennec = new TeamBugQueryBase("Fennec Team", TaipeiFennec);
 
     // Loop Firefox Version from columns
-    var colStartWeek = 2;       // The first columns of week to be processed
-    var numWeeks = 1;           // Change this to calculate more weeks
+    var numWeeks = 2;           // Change this to calculate more weeks
 
     // Looping version
     var rowFirstResult = 3;
@@ -60,7 +59,7 @@ TeamWeekSheet.prototype.Generate = function () {
     for (var weekIndex = 0; weekIndex < numWeeks; weekIndex++) {
 
         // Fetch version and week
-        var colWeek = colStartWeek + weekIndex;
+        var colWeek = this.colStartDate + weekIndex;
         var FFversion = this.sheet.getRange(this.rowVersion, colWeek, 1, 1).getValue();
         var FFWeek = this.sheet.getRange(this.rowDate, colWeek, 1, 1).getValue();
         var FFPreWeek = this.sheet.getRange(this.rowDate, colWeek + 1, 1, 1).getValue();
