@@ -14,3 +14,4 @@ gas-include/*
 # for local
 data/*.json
 ipython/.ipynb_checkpoints/*
+node_modules/
