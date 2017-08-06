@@ -40,15 +40,15 @@ TeamWeekSheet.prototype.Generate = function () {
     this.CheckOrAppendRelease(this.currentRelease.version, this.currentRelease.merge_date);
 
     // Prepare TeamQuery
-    var TeamDOM = new TeamBugQueryBase("DOM Team", TaipeiDOM);
-    var TeamNetwork = new TeamBugQueryBase("Network Team", TaipeiNetwork);
-    var TeamSecurity = new TeamBugQueryBase("Security Team", TaipeiSecurity);
-    var TeamLayout = new TeamBugQueryBase("Layout Team", TaipeiLayout);
-    var TeamGraphic = new TeamBugQueryBase("Graphic Team", TaipeiGraphic);
-    var TeamMedia = new TeamBugQueryBase("Media Team", TaipeiMedia);
-    var TeamPerf = new TeamBugQueryBase("Perf Team", TaipeiPerf);
-    var TeamFrontend = new TeamBugQueryBase("Frontend Team", [TaipeiFrontend1, TaipeiFrontend2].join(""));
-    var TeamFennec = new TeamBugQueryBase("Fennec Team", TaipeiFennec);
+    var TeamDOM = new TeamBugQueryBase("DOM");
+    var TeamNetwork = new TeamBugQueryBase("Network");
+    var TeamSecurity = new TeamBugQueryBase("Security");
+    var TeamLayout = new TeamBugQueryBase("Layout");
+    var TeamGraphic = new TeamBugQueryBase("Graphic");
+    var TeamMedia = new TeamBugQueryBase("Media");
+    var TeamPerf = new TeamBugQueryBase("Perf");
+    var TeamFrontend = new TeamBugQueryBase("Frontend");
+    var TeamFennec = new TeamBugQueryBase("Fennec");
 
     // Loop Firefox Version from columns
     var numWeeks = 2;           // Change this to calculate more weeks

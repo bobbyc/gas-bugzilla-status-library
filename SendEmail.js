@@ -63,9 +63,9 @@ function composeNewEmailBody() {
 
   // Get version information
   var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
-  var releaseDate = (new Date(dashboardSheet.getRange('C2').getValue() - tzoffset)).toISOString().slice(0,10);
+  var releaseDate = (new Date(dashboardSheet.getRange('C2').getValue() - tzoffset)).toISOString().slice(0, 10);
   var releaseWeek = [GetOrdinalNumberOf(dashboardSheet.getRange('E2').getValue()),
-                          dashboardSheet.getRange('D2').getValue()].join(' / ')
+    ' / ', dashboardSheet.getRange('D2').getValue(), ' weeks'].join('')
 
   // replace variable in template
   template.currentVersion = dashboardSheet.getRange('B2').getValue();

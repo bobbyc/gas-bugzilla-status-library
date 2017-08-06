@@ -23,14 +23,14 @@ MozillaSheet.prototype.Generate = function () {
     this.CheckOrAppendRelease(this.currentRelease.version, this.currentRelease.merge_date);
 
     // Prepare TeamQuery
-    var TeamDOM = new TeamBugQueryBase("DOM", MozillaDOM);
-    var TeamNetwork = new TeamBugQueryBase("Network", MozillaNetwork);
-    var TeamSecurity = new TeamBugQueryBase("Security", MozillaSecurity);
-    var TeamLayout = new TeamBugQueryBase("Layout", MozillaLayout);
-    var TeamGraphic = new TeamBugQueryBase("Graphic", MozillaGraphic);
-    var TeamMedia = new TeamBugQueryBase("Media", MozillaMedia);
-    var TeamPerf = new TeamBugQueryBase("Perf", MozillaPerf);
-    var TeamFrontend = new TeamBugQueryBase("Frontend", MozillaFrontend);
+    var TeamDOM = new TeamBugQueryBase("MozillaDOM");
+    var TeamNetwork = new TeamBugQueryBase("MozillaNetwork");
+    var TeamSecurity = new TeamBugQueryBase("MozillaSecurity");
+    var TeamLayout = new TeamBugQueryBase("MozillaLayout");
+    var TeamGraphic = new TeamBugQueryBase("MozillaGraphic");
+    var TeamMedia = new TeamBugQueryBase("MozillaMedia");
+    var TeamPerf = new TeamBugQueryBase("MozillaPerf");
+    var TeamFrontend = new TeamBugQueryBase("MozillaFrontend");
 
     // Loop Firefox Version from columns
     var numVersions = 2;        // How many version need to be processd?

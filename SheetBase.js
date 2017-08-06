@@ -67,13 +67,12 @@ SheetBase.prototype.CheckOrAppendRelease = function (CurrentRelease, date) {
  * @param err
  * @param result
  */
-var TeamBugQueryBase = function (name, members) {
+var TeamBugQueryBase = function (name) {
     this.name = name || 'TeamBugQuery';
-    this.members = members;
-    if (this.members != undefined)
-        this.nTeamSize = members.split(",").length;
-    else
-        this.nTeamSize = 0;
+
+    // Query Team members from 'Teams' Sheet
+    this.members = this.GetTeamByName(this.name).join(',');
+    this.nTeamSize = this.members.split(",").length;
 
     // Counter for Bugs
     this.buglist = undefined;
@@ -130,7 +129,7 @@ TeamBugQueryBase.prototype.CountBugs = function () {
     }
 }
 
-TeamBugQueryBase.prototype.Reset = function() {
+TeamBugQueryBase.prototype.Reset = function () {
     // Counter for Bugs
     this.buglist = undefined;
     this.nBugs = 0;
@@ -364,8 +363,7 @@ TeamBugQueryBase.prototype.SearchFixedBugByComponens = function (version, compon
 
 TeamBugQueryBase.prototype.RenderToSheet = function (sheet, row, column) {
 
-    if (this.buglist != undefined)
-    {
+    if (this.buglist != undefined) {
         var Devs = countDevelopers(this.buglist)
         var nTeamSize = Object.keys(Devs).length;
 
@@ -397,4 +395,23 @@ TeamBugQueryBase.prototype.RenderBugNumToSheet = function (sheet, row, column) {
     if (sheet != undefined) {
         sheet.getRange(row, column).setValue(this.nBugs);
     }
+}
+
+TeamBugQueryBase.prototype.GetTeamByName = function (teamName) {
+
+    var sheet = ss.getSheetByName("Teams");
+
+    var members = [];
+    var range = sheet.getDataRange();
+    var data = range.getValues();
+    var col = data[0].indexOf(teamName);
+    if (col != -1) {
+        for (var iName = 1; iName < range.getNumRows(); iName++) {
+            var name = data[iName][col];
+            if (name != '')
+                members.push(data[iName][col]);
+        }
+    }
+
+    return members;
 }

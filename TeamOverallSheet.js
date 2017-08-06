@@ -23,9 +23,9 @@ TeamOverallSheet.prototype.Generate = function () {
     this.CheckOrAppendRelease(this.currentRelease.version, this.currentRelease.merge_date);
 
     // Prepare TeamQuery
-    var TeamFirefox = new TeamBugQueryBase("Firefox", undefined);
-    var TeamCore = new TeamBugQueryBase("Core", undefined);
-    var TeamAndroid = new TeamBugQueryBase("Firefox for Android", undefined);
+    var TeamFirefox = new TeamBugQueryBase("Firefox");
+    var TeamCore = new TeamBugQueryBase("Core");
+    var TeamAndroid = new TeamBugQueryBase("Firefox for Android");
 
     // Loop Firefox Version from columns
     var numVersions = 2;        // How many version need to be processd?

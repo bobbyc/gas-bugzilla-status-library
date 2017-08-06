@@ -23,33 +23,35 @@ TeamRegressionSheet.prototype.Generate = function () {
     this.CheckOrAppendRelease(this.currentRelease.version, this.currentRelease.merge_date);
 
     // Prepare TeamQuery
-    var TeamDOM = new TeamBugQueryBase("Core", TaipeiDOM);
-    var TeamNetwork = new TeamBugQueryBase("Core", TaipeiNetwork);
-    var TeamSecurity = new TeamBugQueryBase("Core", TaipeiSecurity);
-    var TeamLayout = new TeamBugQueryBase("Core", TaipeiLayout);
-    var TeamGraphic = new TeamBugQueryBase("Core", TaipeiGraphic);
-    var TeamMedia = new TeamBugQueryBase("Core", TaipeiMedia);
-    var TeamPerf = new TeamBugQueryBase("Core", TaipeiPerf);
+     var TeamDOM = new TeamBugQueryBase("DOM");
+    var TeamNetwork = new TeamBugQueryBase("Network");
+    var TeamSecurity = new TeamBugQueryBase("Security");
+    var TeamLayout = new TeamBugQueryBase("Layout");
+    var TeamGraphic = new TeamBugQueryBase("Graphic");
+    var TeamMedia = new TeamBugQueryBase("Media");
+    var TeamPerf = new TeamBugQueryBase("Perf");
 
-    var TeamMozDOM = new TeamBugQueryBase("Core", MozillaDOM);
-    var TeamMozNetwork = new TeamBugQueryBase("Core", MozillaNetwork);
-    var TeamMozSecurity = new TeamBugQueryBase("Core", MozillaSecurity);
-    var TeamMozLayout = new TeamBugQueryBase("Core", MozillaLayout);
-    var TeamMozGraphic = new TeamBugQueryBase("Core", MozillaGraphic);
-    var TeamMozMedia = new TeamBugQueryBase("Core", MozillaMedia);
+    var TeamMozDOM = new TeamBugQueryBase("MozillaDOM");
+    var TeamMozNetwork = new TeamBugQueryBase("MozillaNetwork");
+    var TeamMozSecurity = new TeamBugQueryBase("MozillaSecurity");
+    var TeamMozLayout = new TeamBugQueryBase("MozillaLayout");
+    var TeamMozGraphic = new TeamBugQueryBase("MozillaGraphic");
+    var TeamMozMedia = new TeamBugQueryBase("MozillaMedia");
 
-    var TeamFirefox = new TeamBugQueryBase("Firefox", undefined);
-    var TeamCore = new TeamBugQueryBase("Core", undefined);
-    var TeamAndroid = new TeamBugQueryBase("Firefox for Android", undefined);
+    var TeamFirefox = new TeamBugQueryBase("Firefox");
+    var TeamCore = new TeamBugQueryBase("Core");
+    var TeamAndroid = new TeamBugQueryBase("Firefox for Android");
 
     // Loop Firefox Version from columns
     var numVersions = 2;        // How many version need to be processd?
 
     // Loop
     var rowFirstResult = 3;
-    var loopTeam = [TeamDOM, TeamSecurity, TeamNetwork, TeamLayout, TeamGraphic, TeamMedia, TeamPerf,
-        TeamMozDOM, TeamMozSecurity, TeamMozNetwork, TeamMozLayout, TeamMozGraphic, TeamMozMedia,
-        TeamFirefox, TeamCore, TeamAndroid];
+    var loopTeam = [ ['Core', TeamDOM], ['Core', TeamSecurity], ['Core', TeamNetwork], ['Core', TeamLayout],
+                     ['Core', TeamGraphic], ['Core', TeamMedia], ['Core', TeamPerf],
+                     ['Core', TeamMozDOM], ['Core', TeamMozSecurity], ['Core', TeamMozNetwork], ['Core', TeamMozLayout],
+                     ['Core', TeamMozGraphic], ['Core', TeamMozMedia],
+                     ["Firefox", TeamFirefox], [ 'Core',TeamCore], ["Firefox for Android", TeamAndroid]];
     for (var ver = 0; ver < numVersions; ver++) {
 
         // Fetch the range of cells B1 -> [numVersions]1
@@ -60,8 +62,8 @@ TeamRegressionSheet.prototype.Generate = function () {
         for (i = 0; i < loopTeam.length; i++) {
 
             var rowsTeamResult = 10;
-            loopTeam[i].SearchFixedRegression(loopTeam[i].name, FFversion);
-            loopTeam[i].RenderToSheet(this.sheet, rowFirstResult + rowsTeamResult * i, this.colStartDate + ver);
+            loopTeam[i][1].SearchFixedRegression(loopTeam[i][0], FFversion);
+            loopTeam[i][1].RenderToSheet(this.sheet, rowFirstResult + rowsTeamResult * i, this.colStartDate + ver);
 
         }
     }
